@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/include/aux_func/**",
+                "${workspaceFolder}/include/classes/**",
+                "${workspaceFolder}/include/export**",
+                "${workspaceFolder}/include/import**",
+                "${workspaceFolder}/include/MD**",
+                "${workspaceFolder}/build/Eigen_ext/src**"
+            ],
+            "defines": [],
+            "compilerPath": "/home/hrc/anaconda3/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
