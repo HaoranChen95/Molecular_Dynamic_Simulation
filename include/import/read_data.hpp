@@ -13,9 +13,9 @@
 
 std::pair<Unsign, Unsign> get_rows_cols(const std:: string& path, const std::string& suffix = ".txt");
 
-Mat read_data(const std::string& path, const std::string& suffix = ".txt");
+Mat read_data(const std::string& path = "init_data", const std::string& suffix = ".txt");
 
-void read_data(Mat& M, const std::string& path, const Unsign row, const Unsign cols, const std::string suffix = ".txt");
+void read_data(Mat& M, const Unsign row, const Unsign cols = 3, const std::string& path = "init_data", const std::string suffix = ".txt");
 
 
 #endif

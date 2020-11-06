@@ -20,5 +20,9 @@ int main(const int argc, const char* argv[]){
 	// MD simulations goes here
 	cout << LJ_Potential(g_para, 2.0) << " " << LJ_Force(g_para, 2.0)<< endl;
 
+	Mat i_data{read_data()};
+
+	cout << i_data.norm() << endl;
+
 	cout << "leaving main" << endl;
 }

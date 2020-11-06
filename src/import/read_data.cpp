@@ -19,14 +19,14 @@ pair<Unsign, Unsign> get_rows_cols(const string& path, const string& suffix){
 		cols = a.size();
 		f_in_col.close();	
 	}
-	else{cout << "read_data get_rows_cols: File could not be opend -> reading columns of path " + n << endl;}
+	else{cout << "read_data get_rows_cols: File could not be opened -> reading columns of path " + n << endl;}
 
 	ifstream f_in_row(n, ios::in);
 	if (f_in_row.is_open()){
 		while(getline(f_in_row, line)){rows = rows + 1;}
 		f_in_row.close();
 	}
-	else{cout << "read_data get_rows_cols: File could not be opend -> reading rows of path " + n << endl;}
+	else{cout << "read_data get_rows_cols: File could not be opened -> reading rows of path " + n << endl;}
 
 	return {rows, cols};
 }
@@ -55,7 +55,7 @@ Mat read_data(const string& path, const string& suffix){
 		}	
 		f_in.close();	
 	}
-	else{cout << "read_data: File could not be opend -> read_data with path " + n << endl;}
+	else{cout << "read_data: File could not be opened -> read_data with path " + n << endl;}
 	is_reg(M);
 
 	return M;
@@ -73,6 +73,7 @@ void read_data(Mat& M, const string& path, const Unsign rows, const Unsign cols,
 	
 	const string& n = path + suffix;
 	ifstream f_in(n, ios::in);
+	M = Mat::Zero(rows, cols);
 
 	if (f_in.is_open()){
 		istream_iterator<double> start(f_in);
@@ -83,7 +84,7 @@ void read_data(Mat& M, const string& path, const Unsign rows, const Unsign cols,
 		}	
 		f_in.close();	
 	}
-	else{cout << "read_data: File could not be opend -> read_data with path " + n << endl;}
+	else{cout << "read_data: File could not be opened -> read_data with path " + n << endl;}
 	
 	is_reg(M);
 }
