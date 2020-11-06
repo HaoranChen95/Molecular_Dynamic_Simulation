@@ -15,14 +15,14 @@ class MDParameter {
 		void read_input(const std::string& path="input", const std::string& suffix=".txt");
 
 
-		void N(const unsigned input);
+		void N(const unsigned long input);
 		void epsilon(const double input);
 		void sigma(const double input);
 		void m(const double input);
 		void boundary_width(const double input);
 		void time_step(const double input);
 
-		unsigned N() const;
+		unsigned long N() const;
 		double epsilon() const;
 		double sigma() const;
 		double m() const;
@@ -31,7 +31,7 @@ class MDParameter {
 
 	private:
 
-		unsigned N_;  ///< number of particles in the system
+		unsigned long N_;  ///< number of particles in the system
 		double epsilon_;  ///< constant in Lenard-Jones potential
 		double sigma_;  ///<
 		double m_;  ///< single particle mass

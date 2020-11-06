@@ -13,7 +13,9 @@ int main(const int argc, const char* argv[]){
 		return 1;	
 	}
 
-	cout << g_para.time_step() << endl;
+	cout <<"time step:\t\t" << g_para.time_step() << endl;
+
+	g_para.read_input();
 
 	// MD simulations goes here
 		

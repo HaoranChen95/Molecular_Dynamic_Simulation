@@ -12,7 +12,6 @@ void assign(MDParameter& para, const unsigned argc, const char* argv[]){
 
 	if (2 == argc){
 		para.time_step(stod(argv[1]));
-		cout << para.time_step() << endl;
 	}
 	else{
 		const string s = "Call executable with 2 input arguments";
