@@ -18,7 +18,7 @@ int main(const int argc, const char* argv[]){
 	g_para.read_input();
 
 	// MD simulations goes here
-		
+	cout << LJ_Potential(g_para, 2.0) << " " << LJ_Force(g_para, 2.0)<< endl;
 
 	cout << "leaving main" << endl;
 }

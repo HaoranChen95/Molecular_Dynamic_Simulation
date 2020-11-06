@@ -8,6 +8,10 @@
 
 #include "read_data.hpp"
 
+
+//test potential
+#include "potential.hpp"
+
 MDParameter g_para;
 
 
