@@ -6,6 +6,8 @@
 #include "additional.hpp"
 #include "assign.hpp"
 
+#include "read_data.hpp"
+
 MDParameter g_para;
 
 

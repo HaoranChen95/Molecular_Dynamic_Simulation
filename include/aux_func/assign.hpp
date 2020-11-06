@@ -5,8 +5,10 @@
 #include <iostream>
 #include <string>
 
+#include "MDParameter.hpp"
 
-void assign(const unsigned argc, const char* arg[]);
+
+void assign(MDParameter& para, const unsigned argc, const char* arg[]);
 
 
 #endif
