@@ -12,6 +12,8 @@
 //test potential
 #include "potential.hpp"
 
+#include "partical.hpp"
+
 MDParameter g_para;
 
 

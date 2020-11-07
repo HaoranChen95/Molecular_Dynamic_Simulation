@@ -22,7 +22,18 @@ int main(const int argc, const char* argv[]){
 
 	Mat i_data{read_data()};
 
-	cout << i_data.norm() << endl;
+	cout << i_data.row(0) << endl;
+
+	//TODO add partial class and test
+
+	Particle particle;
+	particle.AddPartical();
+	particle.x(i_data.row(0));
+	cout << particle.x() << endl;
+	particle.AddPartical();
+	particle.x(i_data.row(1));
+	cout << particle.x() << endl;
 
 	cout << "leaving main" << endl;
+	return 0;
 }

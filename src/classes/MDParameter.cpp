@@ -7,7 +7,7 @@ using namespace std;
 
 MDParameter::MDParameter() = default;
 
-void MDParameter::N(const unsigned long input)				{N_ = input;};
+void MDParameter::N(const unsigned long input)			{N_ = input;};
 void MDParameter::epsilon(const double input)			{epsilon_ = input;};
 void MDParameter::sigma(const double input)				{sigma_ = input;};
 void MDParameter::m(const double input)					{m_ = input;};
