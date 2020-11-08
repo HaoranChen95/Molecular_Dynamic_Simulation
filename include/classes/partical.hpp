@@ -3,10 +3,10 @@
 
 #include "additional.hpp"
 
-class Particle{
+class ParticleList{
 	public:
-		Particle();
-		
+		ParticleList();
+
 		void x(const Vec input);
 		void v(const Vec input);
 		void f(const Vec input);
@@ -15,20 +15,21 @@ class Particle{
 		Vec v() const;
 		Vec f() const;
 
-		Particle next(); //TODO need to define.
-		Particle head();
-
 		void AddPartical();//TODO this function can't work well
 
 
 
 	private:
-		Vec x_;
-		Vec v_;
-		Vec f_;
+		struct Particle{
+			Vec x_;
+			Vec v_;
+			Vec f_;
+			Particle *next_{NULL};
+		};
+
 		Particle *head_;
 		Particle *curr_;
-		Particle *next_;
+
 };
 
 

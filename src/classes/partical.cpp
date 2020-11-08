@@ -1,36 +1,31 @@
 #include "partical.hpp"
 
-Particle::Particle(){
+using namespace std;
+
+ParticleList::ParticleList(){
 	head_ = NULL;
-	next_ = NULL;
+	curr_ = NULL;
 }
 
-void Particle::x(const Vec input)	{x_ = input;}
-void Particle::v(const Vec input)	{v_ = input;}
-void Particle::f(const Vec input)	{f_ = input;}
+void ParticleList::x(const Vec input)	{curr_ -> x_ = input;}
+void ParticleList::v(const Vec input)	{curr_ -> v_ = input;}
+void ParticleList::f(const Vec input)	{curr_ -> f_ = input;}
 
-Vec Particle::x() const	{return x_;}
-Vec Particle::v() const	{return v_;}
-Vec Particle::f() const	{return f_;}
+Vec ParticleList::x() const	{return curr_ -> x_;}
+Vec ParticleList::v() const	{return curr_ -> v_;}
+Vec ParticleList::f() const	{return curr_ -> f_;}
 
-Particle Particle::next(){
-
-}
-
-Particle Particle::head(){
-
-}
-
-void Particle::AddPartical(){
+void ParticleList::AddPartical(){
 	Particle *new_particle = new Particle;
 	if(head_ != NULL){
-		Particle *curr_particle;
-		while (curr_particle == NULL) {
-			curr_particle -> next_ = next_;
+		curr_ = head_;
+		while (curr_ ->next_!= NULL) {
+			curr_ = curr_ -> next_;
 		}
-		curr_particle -> next_ = new_particle;
+		curr_ -> next_ = new_particle;
 	}
 	else{
 		head_ = new_particle;
+		curr_ = new_particle;
 	}
 }

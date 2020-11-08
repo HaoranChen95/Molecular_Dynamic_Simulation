@@ -26,13 +26,14 @@ int main(const int argc, const char* argv[]){
 
 	//TODO add partial class and test
 
-	Particle particle;
-	particle.AddPartical();
-	particle.x(i_data.row(0));
-	cout << particle.x() << endl;
-	particle.AddPartical();
-	particle.x(i_data.row(1));
-	cout << particle.x() << endl;
+	ParticleList particle_list;
+	particle_list.AddPartical();
+	particle_list.x(i_data.row(0));
+	cout << particle_list.x() << endl;
+	particle_list.AddPartical();
+	particle_list.x(i_data.row(1));
+	//particle.head();
+	cout << particle_list.x() << endl;
 
 	cout << "leaving main" << endl;
 	return 0;
