@@ -21,6 +21,8 @@ class ParticleList{
 
 		void PrintList_x();
 
+		
+
 	private:
 		struct Particle{
 			Vec x_;
@@ -29,7 +31,8 @@ class ParticleList{
 			Particle *next_;
 		};
 
-		Particle *head_;
+		Particle *head_old_;
+		Particle *head_new_;
 		Particle *curr_;
 
 };
