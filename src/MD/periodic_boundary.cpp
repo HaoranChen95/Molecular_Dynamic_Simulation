@@ -1,11 +1,11 @@
 #include "periodic_boundary.hpp"
 
-Vec periodic_force(const Vec x_a, const Vec x_b, double (*force)(const double r), const MDParameter parm){
-	Vec f{x_b - x_a};
+Vec periodic_force(const Vec x_a, const Vec x_b, double (*force)(const MDParameter parm, const double r), const MDParameter parm){
+	Vec f{x_a - x_b};
 	for (int i{0}; i<3; ++i){
 		f[i] = remainder(f[i], parm.boundary_width());
 	}
-	f = force(f.norm())/f.norm()*f;
+	f = force(parm, f.norm())/f.norm()*f;
 	return f;
 }
 

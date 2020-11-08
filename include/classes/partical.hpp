@@ -12,10 +12,13 @@ class ParticleList{
 		void x(const Vec input);
 		void v(const Vec input);
 		void f(const Vec input);
+		void temp_f(const Vec input);
 
 		Vec x() const;
 		Vec v() const;
 		Vec f() const;
+		Vec temp_x() const;
+		Vec temp_f() const;
 
 		void AddPartical();
 

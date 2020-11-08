@@ -8,13 +8,17 @@ ParticleList::ParticleList(){
 	temp_ = NULL;
 }
 
-void ParticleList::x(const Vec input)	{curr_ -> x_ = input;}
-void ParticleList::v(const Vec input)	{curr_ -> v_ = input;}
-void ParticleList::f(const Vec input)	{curr_ -> f_ = input;}
+void ParticleList::x(const Vec input)		{curr_ -> x_ = input;}
+void ParticleList::v(const Vec input)		{curr_ -> v_ = input;}
+void ParticleList::f(const Vec input)		{curr_ -> f_ = input;}
+void ParticleList::temp_f(const Vec input)	{temp_ -> f_ = input;}
 
 Vec ParticleList::x() const				{return curr_ -> x_;}
 Vec ParticleList::v() const				{return curr_ -> v_;}
 Vec ParticleList::f() const				{return curr_ -> f_;}
+Vec ParticleList::temp_x() const		{return temp_ -> x_;}
+Vec ParticleList::temp_f() const		{return temp_ -> f_;}
+
 
 void ParticleList::head()				{curr_ = head_;}
 void ParticleList::next()				{curr_ = curr_ -> next_;}

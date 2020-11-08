@@ -16,6 +16,8 @@
 
 #include "periodic_boundary.hpp"
 
+#include "velocity_verlet.hpp"
+
 MDParameter g_para;
 
 

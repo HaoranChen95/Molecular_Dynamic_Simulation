@@ -6,7 +6,7 @@ using namespace std;
  * @param[in] argv Input arguments **/
 
 //Todo change force function
-double one_force(const double r){
+double one_force(const MDParameter parm, const double r){
 	return r;
 }
 
@@ -59,16 +59,22 @@ int main(const int argc, const char* argv[]){
 	particle_list[0].x(i_data.row(6));
 	particle_list[0].v(i_data.row(7));
 
-	//particle_list.PrintList_x();
+	//particle_list[0].PrintList_x();
+
+	//sum_force(particle_list[0], one_force, g_para);
 
 	particle_list[0].head();
-	cout << particle_list[0].x() << endl;
+	cout << "Force 1\n" << particle_list[0].f() << endl;
 	particle_list[0].next();
-	cout << particle_list[0].x() << endl;
+	cout << "Force 2\n" << particle_list[0].f() << endl;
+	particle_list[0].next();
+	cout << "Force 3\n" << particle_list[0].f() << endl;
+	particle_list[0].next();
+	cout << "Force 4\n" << particle_list[0].f() << endl;
+	particle_list[0].head();
+	cout << periodic_force(particle_list[0].x(), particle_list[0].v(), LJ_Force, g_para) << endl;
 
-	//cout << periodic_force(particle_list[0].x(),particle_list[0].v(), one_force, g_para) << endl;
-
-	//cout << periodic_boundary(particle_list.x(), g_para) << endl;
+	//cout << Vec::Zero(3) << endl;
 
 	cout << "leaving main" << endl;
 	return 0;
