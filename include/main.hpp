@@ -14,6 +14,8 @@
 
 #include "partical.hpp"
 
+#include "periodic_boundary.hpp"
+
 MDParameter g_para;
 
 

@@ -4,6 +4,12 @@ using namespace std;
  *
  * @param[in] argc Number of input arguments
  * @param[in] argv Input arguments **/
+
+//Todo change force function
+double one_force(const double r){
+	return r;
+}
+
 int main(const int argc, const char* argv[]){
 	cout << "entering main" << endl;
 	
@@ -23,9 +29,7 @@ int main(const int argc, const char* argv[]){
 	Mat i_data;
 	read_data(i_data,4);
 
-	cout << i_data << endl;
-
-	//TODO add partial class and test
+	//cout << i_data << endl; 
 
 	// ParticleList particle_list;
 	// for(long unsigned int i{0} ; i<2 ; ++i){
@@ -34,7 +38,7 @@ int main(const int argc, const char* argv[]){
 	// particle_list.v(i_data.row(2*i+1));
 	// }
 
-	ParticleList particle_list;
+	ParticleList particle_list; 	//TODO need to intergrat to a function
 	particle_list.AddPartical();
 	particle_list.x(i_data.row(0));
 	particle_list.v(i_data.row(1));
@@ -43,12 +47,16 @@ int main(const int argc, const char* argv[]){
 	particle_list.x(i_data.row(2));
 	particle_list.v(i_data.row(3));
 
-	particle_list.PrintList_x();
+	// particle_list.PrintList_x();
 
 	particle_list.to_index(0);
 	cout << particle_list.x() << endl;
 	particle_list.to_index(1);
 	cout << particle_list.x() << endl;
+
+	cout << periodic_force(particle_list.x(),particle_list.v(), one_force, g_para) << endl;
+
+	cout << periodic_boundary(particle_list.x(), g_para) << endl;
 
 	cout << "leaving main" << endl;
 	return 0;
