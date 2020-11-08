@@ -38,31 +38,35 @@ int main(const int argc, const char* argv[]){
 	// particle_list.v(i_data.row(2*i+1));
 	// }
 
-	ParticleList particle_list; 	//TODO need to intergrat to a function
-	particle_list.AddPartical();
-	particle_list.x_old(i_data.row(0));
-	particle_list.v_old(i_data.row(1));
+	ParticleList particle_list[2]; 	//TODO need to intergrat to a function
+	particle_list[0].AddPartical();
+	particle_list[1].AddPartical();
+	particle_list[0].x(i_data.row(0));
+	particle_list[0].v(i_data.row(1));
 
-	particle_list.AddPartical();
-	particle_list.x_old(i_data.row(2));
-	particle_list.v_old(i_data.row(3));
+	particle_list[0].AddPartical();
+	particle_list[1].AddPartical();
+	particle_list[0].x(i_data.row(2));
+	particle_list[0].v(i_data.row(3));
 
-	particle_list.AddPartical();
-	particle_list.x_old(i_data.row(4));
-	particle_list.v_old(i_data.row(5));
+	particle_list[0].AddPartical();
+	particle_list[1].AddPartical();
+	particle_list[0].x(i_data.row(4));
+	particle_list[0].v(i_data.row(5));
 
-	particle_list.AddPartical();
-	particle_list.x_old(i_data.row(6));
-	particle_list.v_old(i_data.row(7));
+	particle_list[0].AddPartical();
+	particle_list[1].AddPartical();
+	particle_list[0].x(i_data.row(6));
+	particle_list[0].v(i_data.row(7));
 
 	//particle_list.PrintList_x();
 
-	particle_list.head();
-	cout << particle_list.x() << endl;
-	particle_list.next();
-	cout << particle_list.x() << endl;
+	particle_list[0].head();
+	cout << particle_list[0].x() << endl;
+	particle_list[0].next();
+	cout << particle_list[0].x() << endl;
 
-	//cout << periodic_force(particle_list.x(),particle_list.v(), one_force, g_para) << endl;
+	//cout << periodic_force(particle_list[0].x(),particle_list[0].v(), one_force, g_para) << endl;
 
 	//cout << periodic_boundary(particle_list.x(), g_para) << endl;
 

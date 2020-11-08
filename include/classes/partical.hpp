@@ -9,12 +9,9 @@ class ParticleList{
 		
 		void to_index(const unsigned long int index);
 
-		void x_old(const Vec input);
-		void v_old(const Vec input);
-		void f_old(const Vec input);
-		void x_new(const Vec input);
-		void v_new(const Vec input);
-		void f_new(const Vec input);
+		void x(const Vec input);
+		void v(const Vec input);
+		void f(const Vec input);
 
 		Vec x() const;
 		Vec v() const;
@@ -24,10 +21,11 @@ class ParticleList{
 
 		void head();
 		void next();
+		void set_temp();
+		bool is_end();
+		bool is_self();
 
 		void PrintList_x();
-
-		
 
 	private:
 		struct Particle{
@@ -37,10 +35,9 @@ class ParticleList{
 			Particle *next_;
 		};
 
-		Particle *head_old_;
-		Particle *head_new_;
-		Particle *curr_old_;
-		Particle *curr_new_;
+		Particle *head_;
+		Particle *curr_;
+		Particle *temp_;
 
 };
 
