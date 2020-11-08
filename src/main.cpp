@@ -61,18 +61,29 @@ int main(const int argc, const char* argv[]){
 
 	//particle_list[0].PrintList_x();
 
-	//sum_force(particle_list[0], one_force, g_para);
+	cout << "positions: \n";
+	particle_list[0].head();
+	cout << "x 1\n" << particle_list[0].x() << endl;
+	particle_list[0].next();
+	cout << "x 2\n" << particle_list[0].x() << endl;
+	particle_list[0].next();
+	cout << "x 3\n" << particle_list[0].x() << endl;
+	particle_list[0].next();
+	cout << "x 4\n" << particle_list[0].x() << endl;
+
+	// sum_force(particle_list[0], one_force, g_para);
+
+	// particle_list[0].head();
+	// cout << "Force 1\n" << particle_list[0].f() << endl;
+	// particle_list[0].next();
+	// cout << "Force 2\n" << particle_list[0].f() << endl;
+	// particle_list[0].next();
+	// cout << "Force 3\n" << particle_list[0].f() << endl;
+	// particle_list[0].next();
+	// cout << "Force 4\n" << particle_list[0].f() << endl;
 
 	particle_list[0].head();
-	cout << "Force 1\n" << particle_list[0].f() << endl;
-	particle_list[0].next();
-	cout << "Force 2\n" << particle_list[0].f() << endl;
-	particle_list[0].next();
-	cout << "Force 3\n" << particle_list[0].f() << endl;
-	particle_list[0].next();
-	cout << "Force 4\n" << particle_list[0].f() << endl;
-	particle_list[0].head();
-	cout << periodic_force(particle_list[0].x(), particle_list[0].v(), LJ_Force, g_para) << endl;
+	cout << periodic_force(particle_list[0].x(), particle_list[0].v(), one_force, g_para) << endl;
 
 	//cout << Vec::Zero(3) << endl;
 
