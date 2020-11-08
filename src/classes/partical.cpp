@@ -5,50 +5,65 @@ using namespace std;
 ParticleList::ParticleList(){
 	head_old_ = NULL;
 	head_new_ = NULL; // TODO still need to improve the new particle list
-	curr_ = NULL;
+	curr_old_ = NULL;
+	curr_new_ = NULL;
 }
 
-void ParticleList::x(const Vec input)	{curr_ -> x_ = input;}
-void ParticleList::v(const Vec input)	{curr_ -> v_ = input;}
-void ParticleList::f(const Vec input)	{curr_ -> f_ = input;}
+void ParticleList::x_old(const Vec input)	{curr_old_ -> x_ = input;}
+void ParticleList::v_old(const Vec input)	{curr_old_ -> v_ = input;}
+void ParticleList::f_old(const Vec input)	{curr_old_ -> f_ = input;}
+void ParticleList::x_new(const Vec input)	{curr_new_ -> x_ = input;}
+void ParticleList::v_new(const Vec input)	{curr_new_ -> v_ = input;}
+void ParticleList::f_new(const Vec input)	{curr_new_ -> f_ = input;}
 
-Vec ParticleList::x() const	{return curr_ -> x_;}
-Vec ParticleList::v() const	{return curr_ -> v_;}
-Vec ParticleList::f() const	{return curr_ -> f_;}
+Vec ParticleList::x() const	{return curr_old_ -> x_;}
+Vec ParticleList::v() const	{return curr_old_ -> v_;}
+Vec ParticleList::f() const	{return curr_old_ -> f_;}
 
-void ParticleList::to_index(const unsigned int index){
+void ParticleList::head()		{curr_old_ = head_old_; curr_new_ = head_new_;}
+void ParticleList::next()		{curr_old_ = curr_old_ -> next_; curr_new_ = curr_new_ -> next_;}
+
+void ParticleList::to_index(const unsigned long int index){
 	if (head_old_ != NULL){
-		curr_ = head_old_;
+		head();
 		int i{0};
-		while(i < index && curr_ -> next_ != NULL){
+		while(i < index && curr_old_ -> next_ != NULL){
 			++i;
-			curr_ = curr_ -> next_;
+			next();
 		}
 		cout << "turn to index No. " << i << endl;
 	}
 }
 
 void ParticleList::PrintList_x(){
-	curr_ = head_old_;
-	while (curr_ != NULL){
-		cout << curr_ -> x_ << endl;
-		curr_ = curr_ -> next_;
+	curr_old_ = head_old_;
+	while (curr_old_ != NULL){
+		cout << curr_old_ -> x_ << endl;
+		curr_old_ = curr_old_ -> next_;
 	}
+	head();
 }
 
 void ParticleList::AddPartical(){
-	Particle *new_particle = new Particle;
-	new_particle -> next_ = NULL;
+	Particle *new_particle_old = new Particle;
+	Particle *new_particle_new = new Particle;
+	new_particle_new -> next_ = NULL;
+	new_particle_old -> next_ = NULL;
 
 	if(head_old_ != NULL){
-		curr_ = head_old_;
-		while (curr_ ->next_!= NULL) {
-			curr_ = curr_ -> next_;
+		head();
+		while (curr_old_ -> next_ != NULL) {
+			next();
 		}
-		curr_ -> next_ = new_particle;
+		curr_old_ -> next_ = new_particle_old;
+		curr_new_ -> next_ = new_particle_new;
+		cout << "creat new next Partical" << endl;
 	}
 	else{
-		head_old_ = new_particle;
+		head_old_ = new_particle_old;
+		head_new_ = new_particle_new;
+		cout << "creat new head Partical" << endl;
 	}
-	curr_ = new_particle;
+	curr_old_ = new_particle_old;
+	curr_new_ = new_particle_new;
 }
