@@ -6,6 +6,8 @@
 class ParticleList{
 	public:
 		ParticleList();
+		
+		void to_index(const unsigned int index);
 
 		void x(const Vec input);
 		void v(const Vec input);
@@ -17,14 +19,14 @@ class ParticleList{
 
 		void AddPartical();//TODO this function can't work well
 
-
+		void PrintList_x();
 
 	private:
 		struct Particle{
 			Vec x_;
 			Vec v_;
 			Vec f_;
-			Particle *next_{NULL};
+			Particle *next_;
 		};
 
 		Particle *head_;

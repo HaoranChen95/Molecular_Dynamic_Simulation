@@ -69,7 +69,7 @@ Mat read_data(const string& path, const string& suffix){
  * @param[in] cols number of cols of Matrix to be read 
  * @param[in] suffix suffix of file 
  * @version checked */
-void read_data(Mat& M, const string& path, const Unsign rows, const Unsign cols, const string& suffix){
+void read_data(Mat& M, const Unsign rows, const Unsign cols, const std::string& path, const std::string suffix){
 	
 	const string& n = path + suffix;
 	ifstream f_in(n, ios::in);
