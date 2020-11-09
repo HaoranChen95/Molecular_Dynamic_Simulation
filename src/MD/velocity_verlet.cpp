@@ -21,7 +21,7 @@ void velocity_verlet_x(ParticleList *p_l, const MDParameter parm){
 	p_l[0].head();
 	p_l[1].head();
 	while(!p_l[0].is_end()){
-		p_l[1].x(p_l[0].x() + p_l[0].v()*parm.time_step() + p_l[0].f()/2.0/parm.m()*pow(parm.time_step(),2));
+		p_l[1].x(periodic_boundary(p_l[0].x() + p_l[0].v()*parm.time_step() + p_l[0].f()/2.0/parm.m()*pow(parm.time_step(),2),parm));
 		p_l[0].next();
 		p_l[1].next();
 	}

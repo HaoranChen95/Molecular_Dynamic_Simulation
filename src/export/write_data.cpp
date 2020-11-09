@@ -9,6 +9,7 @@ using namespace std;
  * @param[in] path Path including filename, default value data  
  * @param[in] suffix Default value .txt  
  * @param[in] mode Default value ios::out */ 
+
 void write_data(const Mat& M, const string& path, const string& suffix, const ios::openmode mode){
 	
 	const string n = path + suffix; 
