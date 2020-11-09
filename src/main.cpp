@@ -5,7 +5,6 @@ using namespace std;
  * @param[in] argc Number of input arguments
  * @param[in] argv Input arguments **/
 
-//Todo change force function
 double one_force(const MDParameter parm, const double r){
 	return r;
 }
@@ -59,32 +58,36 @@ int main(const int argc, const char* argv[]){
 	particle_list[0].x(i_data.row(6));
 	particle_list[0].v(i_data.row(7));
 
+	//write_data(i_data);
+
 	//particle_list[0].PrintList_x();
 
-	cout << "positions: \n";
-	particle_list[0].head();
-	cout << "x 1\n" << particle_list[0].x() << endl;
-	particle_list[0].next();
-	cout << "x 2\n" << particle_list[0].x() << endl;
-	particle_list[0].next();
-	cout << "x 3\n" << particle_list[0].x() << endl;
-	particle_list[0].next();
-	cout << "x 4\n" << particle_list[0].x() << endl;
+	MD_Simulation(particle_list, g_para);
 
-	 sum_force(particle_list[0], one_force, g_para); //todo there is still some problem
+	// cout << "positions: \n";
+	// particle_list[0].head();
+	// cout << "x 1\n" << particle_list[0].x() << endl;
+	// particle_list[0].next();
+	// cout << "x 2\n" << particle_list[0].x() << endl;
+	// particle_list[0].next();
+	// cout << "x 3\n" << particle_list[0].x() << endl;
+	// particle_list[0].next();
+	// cout << "x 4\n" << particle_list[0].x() << endl;
 
-	particle_list[0].head();
-	cout << "Force 1\n" << particle_list[0].f() << endl;
-	particle_list[0].next();
-	cout << "Force 2\n" << particle_list[0].f() << endl;
-	particle_list[0].next();
-	cout << "Force 3\n" << particle_list[0].f() << endl;
-	particle_list[0].next();
-	cout << "Force 4\n" << particle_list[0].f() << endl;
-
-	particle_list[0].head();
-	cout << periodic_force(particle_list[0].x(), particle_list[0].v(), one_force, g_para) << endl;
-
+	// sum_force(particle_list[0], one_force, g_para);
+	// //TODO test output function
+	// particle_list[0].head();
+	// write_data(particle_list[0].f());
+	// cout << "Force 1\n" << particle_list[0].f() << endl;
+	// particle_list[0].next();
+	// write_data(particle_list[0].f());
+	// cout << "Force 2\n" << particle_list[0].f() << endl;
+	// particle_list[0].next();
+	// write_data(particle_list[0].f());
+	// cout << "Force 3\n" << particle_list[0].f() << endl;
+	// particle_list[0].next();
+	// write_data(particle_list[0].f());
+	// cout << "Force 4\n" << particle_list[0].f() << endl;
 
 	cout << "leaving main" << endl;
 	return 0;

@@ -12,7 +12,7 @@ using namespace std;
 void write_data(const Mat& M, const string& path, const string& suffix, const ios::openmode mode){
 	
 	const string n = path + suffix; 
-	IOFormat pre(FullPrecision, 0, "\t"); // double precision, alignment of columns, separator "\t"
+	IOFormat pre(FullPrecision, 0, ",",","); // double precision, alignment of columns, separator "\t"
 	ofstream f_out(n, mode);
 	if (f_out.is_open()){
 		f_out << M.format(pre) << endl;

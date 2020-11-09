@@ -21,6 +21,7 @@ class MDParameter {
 		void m(const double input);
 		void boundary_width(const double input);
 		void time_step(const double input);
+		void time_length(const double input);
 
 		unsigned long N() const;
 		double epsilon() const;
@@ -28,6 +29,7 @@ class MDParameter {
 		double m() const;
 		double boundary_width() const;
 		double time_step() const;
+		double time_length() const;
 
 	private:
 
@@ -37,7 +39,7 @@ class MDParameter {
 		double m_;  ///< single particle mass
 		double boundary_width_;  ///< boundary of periodic boundary potential
 		double time_step_;  ///< time step
-
+		double time_length_;
 };
 
 #endif

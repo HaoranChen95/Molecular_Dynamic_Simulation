@@ -13,13 +13,15 @@ void MDParameter::sigma(const double input)				{sigma_ = input;};
 void MDParameter::m(const double input)					{m_ = input;};
 void MDParameter::boundary_width(const double input)	{boundary_width_ = input;};
 void MDParameter::time_step(const double input)			{time_step_ = input;};
+void MDParameter::time_length(const double input)		{time_length_ = input;};
 
-unsigned long MDParameter::N() const					{return N_;}
+unsigned long MDParameter::N() const			{return N_;}
 double MDParameter::epsilon() const				{return epsilon_;}
 double MDParameter::sigma() const				{return sigma_;}
 double MDParameter::m() const					{return m_;}
 double MDParameter::boundary_width() const		{return boundary_width_;}
 double MDParameter::time_step() const			{return time_step_;}
+double MDParameter::time_length() const			{return time_length_;}
 
 /** @brief Parse key-value parameter from input/input.txt
  *

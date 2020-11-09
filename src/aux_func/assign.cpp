@@ -10,8 +10,9 @@ using namespace std;
 void assign(MDParameter& para, const unsigned argc, const char* argv[]){
 	cout << "entering assign" << endl;
 
-	if (2 == argc){
-		para.time_step(stod(argv[1]));
+	if (3 == argc){
+		para.time_length(stod(argv[1]));
+		para.time_step(stod(argv[2]));
 	}
 	else{
 		const string s = "Call executable with 2 input arguments";
