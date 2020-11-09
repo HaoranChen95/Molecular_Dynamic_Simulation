@@ -25,7 +25,7 @@ void ParticleList::next()				{curr_ = curr_ -> next_;}
 
 void ParticleList::set_temp()			{temp_ = curr_;}
 
-bool ParticleList::is_end()					{return curr_-> next_ == NULL;}
+bool ParticleList::is_end()					{return curr_ == NULL;}
 bool ParticleList::is_self()				{return temp_ == curr_;}
 
 void ParticleList::to_index(const unsigned long int index){

@@ -71,21 +71,20 @@ int main(const int argc, const char* argv[]){
 	particle_list[0].next();
 	cout << "x 4\n" << particle_list[0].x() << endl;
 
-	// sum_force(particle_list[0], one_force, g_para);
+	 sum_force(particle_list[0], one_force, g_para); //todo there is still some problem
 
-	// particle_list[0].head();
-	// cout << "Force 1\n" << particle_list[0].f() << endl;
-	// particle_list[0].next();
-	// cout << "Force 2\n" << particle_list[0].f() << endl;
-	// particle_list[0].next();
-	// cout << "Force 3\n" << particle_list[0].f() << endl;
-	// particle_list[0].next();
-	// cout << "Force 4\n" << particle_list[0].f() << endl;
+	particle_list[0].head();
+	cout << "Force 1\n" << particle_list[0].f() << endl;
+	particle_list[0].next();
+	cout << "Force 2\n" << particle_list[0].f() << endl;
+	particle_list[0].next();
+	cout << "Force 3\n" << particle_list[0].f() << endl;
+	particle_list[0].next();
+	cout << "Force 4\n" << particle_list[0].f() << endl;
 
 	particle_list[0].head();
 	cout << periodic_force(particle_list[0].x(), particle_list[0].v(), one_force, g_para) << endl;
 
-	//cout << Vec::Zero(3) << endl;
 
 	cout << "leaving main" << endl;
 	return 0;

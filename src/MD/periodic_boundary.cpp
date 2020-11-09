@@ -2,6 +2,7 @@
 
 Vec periodic_force(const Vec x_a, const Vec x_b, double (*force)(const MDParameter parm, const double r), const MDParameter parm){
 	Vec f{x_a - x_b};
+	if (f == Vec::Zero(3)) {return f;}
 	for (int i{0}; i<3; ++i){
 		f[i] = remainder(f[i], parm.boundary_width());
 	}
