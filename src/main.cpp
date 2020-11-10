@@ -75,7 +75,6 @@ int main(const int argc, const char* argv[]){
 	// cout << "x 4\n" << particle_list[0].x() << endl;
 
 	// sum_force(particle_list[0], one_force, g_para);
-	// //TODO test output function
 	// particle_list[0].head();
 	// write_data(particle_list[0].f());
 	// cout << "Force 1\n" << particle_list[0].f() << endl;

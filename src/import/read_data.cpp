@@ -7,7 +7,6 @@ using namespace std;
  * @param[in] suffix suffix of file 
  * @version checked */
 pair<Unsign, Unsign> get_rows_cols(const string& path, const string& suffix){
-
 	const string& n = path + suffix;
 	Unsign cols = 0, rows = 0;
 	string line = "";
