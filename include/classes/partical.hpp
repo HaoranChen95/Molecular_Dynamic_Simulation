@@ -3,7 +3,7 @@
 
 #include "additional.hpp"
 
-class ParticleList{
+class ParticleList{ //TODO change to use templet list
 	public:
 		ParticleList();
 		

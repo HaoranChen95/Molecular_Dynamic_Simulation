@@ -10,15 +10,10 @@
 #include "MDSimulation.hpp"
 
 
-//test potential
-#include "potential.hpp"
-
+//test part
 #include "partical.hpp"
 
-#include "periodic_boundary.hpp"
-
-#include "velocity_verlet.hpp"
-
+#include "lattice.hpp"
 
 
 MDParameter g_para;

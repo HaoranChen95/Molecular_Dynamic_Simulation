@@ -39,41 +39,42 @@ int main(const int argc, const char* argv[]){
 	// }
 
 	ParticleList particle_list[2]; 	//TODO need to intergrat to a function
-	particle_list[0].AddPartical();
-	particle_list[1].AddPartical();
-	particle_list[0].x(i_data.row(0));
-	particle_list[0].v(i_data.row(1));
+	initial_lattice(particle_list, g_para);
+	// particle_list[0].AddPartical();
+	// particle_list[1].AddPartical();
+	// particle_list[0].x(i_data.row(0));
+	// particle_list[0].v(i_data.row(1));
 
-	particle_list[0].AddPartical();
-	particle_list[1].AddPartical();
-	particle_list[0].x(i_data.row(2));
-	particle_list[0].v(i_data.row(3));
+	// particle_list[0].AddPartical();
+	// particle_list[1].AddPartical();
+	// particle_list[0].x(i_data.row(2));
+	// particle_list[0].v(i_data.row(3));
 
-	particle_list[0].AddPartical();
-	particle_list[1].AddPartical();
-	particle_list[0].x(i_data.row(4));
-	particle_list[0].v(i_data.row(5));
+	// particle_list[0].AddPartical();
+	// particle_list[1].AddPartical();
+	// particle_list[0].x(i_data.row(4));
+	// particle_list[0].v(i_data.row(5));
 
-	particle_list[0].AddPartical();
-	particle_list[1].AddPartical();
-	particle_list[0].x(i_data.row(6));
-	particle_list[0].v(i_data.row(7));
+	// particle_list[0].AddPartical();
+	// particle_list[1].AddPartical();
+	// particle_list[0].x(i_data.row(6));
+	// particle_list[0].v(i_data.row(7));
 
 	//write_data(i_data);
 
 	//particle_list[0].PrintList_x();
 
-	MD_Simulation(particle_list, g_para);
+	// MD_Simulation(particle_list, g_para);
 
-	// cout << "positions: \n";
-	// particle_list[0].head();
-	// cout << "x 1\n" << particle_list[0].x() << endl;
-	// particle_list[0].next();
-	// cout << "x 2\n" << particle_list[0].x() << endl;
-	// particle_list[0].next();
-	// cout << "x 3\n" << particle_list[0].x() << endl;
-	// particle_list[0].next();
-	// cout << "x 4\n" << particle_list[0].x() << endl;
+	cout << "positions: \n";
+	particle_list[0].head();
+	cout << "x 1\n" << particle_list[0].x() << endl;
+	particle_list[0].next();
+	cout << "x 2\n" << particle_list[0].x() << endl;
+	particle_list[0].next();
+	cout << "x 3\n" << particle_list[0].x() << endl;
+	particle_list[0].next();
+	cout << "x 4\n" << particle_list[0].x() << endl;
 
 	// sum_force(particle_list[0], one_force, g_para);
 	// particle_list[0].head();

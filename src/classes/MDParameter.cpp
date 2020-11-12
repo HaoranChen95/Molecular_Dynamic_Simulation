@@ -10,10 +10,12 @@ MDParameter::MDParameter(){
 	epsilon_ = 1.0;
 	sigma_ = 1.0;
 	density_ = 0.85;
+	lattice_constant_ = pow(density_, 1.0/3);
 	kT_ = 1.0;
 }
 
 void MDParameter::N(const unsigned long input)			{N_ = input;};
+void MDParameter::lattice_edge_particles(const unsigned long input){lattice_edge_particles_ = input;}
 void MDParameter::epsilon(const double input)			{epsilon_ = input;};
 void MDParameter::sigma(const double input)				{sigma_ = input;};
 void MDParameter::m(const double input)					{m_ = input;};
@@ -22,12 +24,15 @@ void MDParameter::time_step(const double input)			{time_step_ = input;};
 void MDParameter::time_length(const double input)		{time_length_ = input;};
 
 unsigned long MDParameter::N() const			{return N_;}
+unsigned long MDParameter::lattice_edge_particles() const {return lattice_edge_particles_;}
 double MDParameter::epsilon() const				{return epsilon_;}
 double MDParameter::sigma() const				{return sigma_;}
 double MDParameter::m() const					{return m_;}
 double MDParameter::boundary_width() const		{return boundary_width_;}
 double MDParameter::time_step() const			{return time_step_;}
 double MDParameter::time_length() const			{return time_length_;}
+double MDParameter::lattice_constant() const	{return lattice_constant_;}
+double MDParameter::kT() const					{return kT_;}
 
 /** @brief Parse key-value parameter from input/input.txt
  *
@@ -56,12 +61,13 @@ void MDParameter::read_input(const string& path, const string& suffix){
 					if (!key.compare("lattice_edge_particles")){
 						lattice_edge_particles_ = stoul(line_cutted[1]);
 						N_ = lattice_edge_particles_ * lattice_edge_particles_ * lattice_edge_particles_;
-						boundary_width_ = lattice_edge_particles_ * pow(density_, 1.0/3.0);
+						boundary_width_ = lattice_edge_particles_ * lattice_constant_;
 
 						cout<< "lattice_edge_particles\t" << lattice_edge_particles_<< endl
 							<< "N:\t\t\t" << N_ <<endl
 							<< "boundary_width:\t\t" << boundary_width_ << endl;
 					}
+					//TODO add code to read density and make sure the relationship between the parameter
 					if (!key.compare("epsilon")){
 						epsilon_ = stold(line_cutted[1]);
 						cout << "epsilon:\t\t" << epsilon_ <<endl;

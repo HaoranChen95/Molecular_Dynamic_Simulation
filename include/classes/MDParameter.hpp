@@ -9,7 +9,7 @@
 #include "str_split.hpp"
 
 
-class MDParameter{
+class MDParameter{ //TODO this class have not clear relationship
 
 	public:
 		MDParameter();
@@ -22,6 +22,7 @@ class MDParameter{
 		void sigma(const double input);
 		void m(const double input);
 		void boundary_width(const double input);
+		void lattice_constant(const double input);
 		void time_step(const double input);
 		void time_length(const double input);
 		void kT(const double input);
@@ -33,6 +34,7 @@ class MDParameter{
 		double sigma() const;
 		double m() const;
 		double boundary_width() const;
+		double lattice_constant() const;
 		double time_step() const;
 		double time_length() const;
 		double kT() const;
@@ -44,8 +46,9 @@ class MDParameter{
 		double epsilon_;  ///< constant in Lenard-Jones potential
 		double sigma_;  ///< constant in Lenard-Jones Potential
 		double m_;  ///< single particle mass
-		double density_;
+		double density_;	///< density of system N/V
 		double boundary_width_;  ///< boundary of periodic boundary potential
+		double lattice_constant_;
 		double time_step_;  ///< time step
 		double time_length_; ///< simulation time length
 		double kT_; ///< initial system temperature
