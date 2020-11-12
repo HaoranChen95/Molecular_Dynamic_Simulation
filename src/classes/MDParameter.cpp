@@ -5,7 +5,13 @@
 #include "MDParameter.hpp"
 using namespace std;
 
-MDParameter::MDParameter() = default;
+MDParameter::MDParameter(){
+	m_	=	1.0;
+	epsilon_ = 1.0;
+	sigma_ = 1.0;
+	density_ = 0.85;
+	kT_ = 1.0;
+}
 
 void MDParameter::N(const unsigned long input)			{N_ = input;};
 void MDParameter::epsilon(const double input)			{epsilon_ = input;};
@@ -43,9 +49,18 @@ void MDParameter::read_input(const string& path, const string& suffix){
 				line_cutted = str_split(line, ':');
 				string key = line_cutted[0];
 				if (2 == line_cutted.size()){  // to avoid empty value field
-					if (!key.compare("N")){				// TODO maybe use "case" is better
+					if (!key.compare("N")){
 						N_ = stoul(line_cutted[1]);
 						cout << "N:\t\t\t" << N_ <<endl;
+					}
+					if (!key.compare("lattice_edge_particles")){
+						lattice_edge_particles_ = stoul(line_cutted[1]);
+						N_ = lattice_edge_particles_ * lattice_edge_particles_ * lattice_edge_particles_;
+						boundary_width_ = lattice_edge_particles_ * pow(density_, 1.0/3.0);
+
+						cout<< "lattice_edge_particles\t" << lattice_edge_particles_<< endl
+							<< "N:\t\t\t" << N_ <<endl
+							<< "boundary_width:\t\t" << boundary_width_ << endl;
 					}
 					if (!key.compare("epsilon")){
 						epsilon_ = stold(line_cutted[1]);
@@ -60,8 +75,16 @@ void MDParameter::read_input(const string& path, const string& suffix){
 						cout << "m:\t\t\t" << m_ <<endl;
 					}
 					if (!key.compare("boundary_width")){
-						boundary_width_ = stoi(line_cutted[1]);
+						boundary_width_ = stod(line_cutted[1]);
 						cout << "periodic boundary width:\t" << boundary_width_ <<endl;
+					}
+					if (!key.compare("kT")){
+						kT_= stod(line_cutted[1]);
+						cout << "kT:\t\t\t\t" << kT_ <<endl;
+					}
+					if (!key.compare("neighbor")){
+						neighbor_= stod(line_cutted[1]);
+						cout << "search neighbor radius:\t" << neighbor_ <<endl;
 					}
 				}
 			}

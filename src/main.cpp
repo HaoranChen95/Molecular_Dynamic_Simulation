@@ -5,9 +5,10 @@ using namespace std;
  * @param[in] argc Number of input arguments
  * @param[in] argv Input arguments **/
 
-double one_force(const MDParameter parm, const double r){
-	return r;
-}
+//TODO intergrat the initial value setteling function
+//TODO change the force potential to cut LJ potential and force
+//TODO change the in put data class
+//TODO add energy calculation function
 
 int main(const int argc, const char* argv[]){
 	cout << "entering main" << endl;

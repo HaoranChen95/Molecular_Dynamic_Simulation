@@ -1,5 +1,1 @@
-N:2
-epsilon:1.0
-sigma:1.0
-m:1.0
-boundary_width:10.0
+lattice_edge_particles:4
