@@ -1,1 +1,2 @@
 lattice_edge_particles:4
+neighbor:2.0

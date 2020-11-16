@@ -4,10 +4,8 @@
 #include <random>
 #include <list>
 
-//#include "partical.hpp"
 #include "MDParameter.hpp"
-//#include "MDSimulation.hpp"
-#include "velocity_verlet.hpp"
+#include "potential.hpp"
 
 struct Particle{
 	Vec q;

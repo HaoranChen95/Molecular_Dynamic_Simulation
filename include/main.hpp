@@ -14,6 +14,7 @@
 #include "partical.hpp"
 
 #include "lattice.hpp"
+#include "neighbor.hpp"
 
 
 MDParameter g_para;
