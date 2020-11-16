@@ -10,6 +10,6 @@
 
 void initial_lattice(ParticleList *p_l, const MDParameter parm);
 
-void init_lattice(std::list<Particle>& p_l, const MDParameter parm);
+std::list<Particle> init_lattice(const MDParameter parm);
 
 #endif

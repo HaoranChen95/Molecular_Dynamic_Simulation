@@ -1,4 +1,5 @@
 #include "main.hpp"
+
 using namespace std;
 /** @brief Main executable
  *
@@ -23,11 +24,16 @@ int main(const int argc, const char* argv[]){
 
 	g_para.read_input();
 
-	// MD simulations goes here
-	cout << LJ_Potential(g_para, 2.0) << " " << LJ_Force(g_para, 2.0)<< endl;
 
-	Mat i_data;
-	read_data(i_data,8);
+	// MD simulations goes here
+	std::list<Particle> p_l{init_lattice(g_para)};
+	if (!p_l.empty()){
+		cout << "first particle position" << p_l.front().x << endl;
+	}
+	
+
+	// Mat i_data; //TODO change the read_data return data type
+	// read_data(i_data,8);
 
 	//cout << i_data << endl; 
 
@@ -38,8 +44,8 @@ int main(const int argc, const char* argv[]){
 	// particle_list.v(i_data.row(2*i+1));
 	// }
 
-	ParticleList particle_list[2]; 	//TODO need to intergrat to a function
-	initial_lattice(particle_list, g_para);
+	// ParticleList particle_list[2]; 	//TODO need to intergrat to a function
+	// initial_lattice(particle_list, g_para);
 	// particle_list[0].AddPartical();
 	// particle_list[1].AddPartical();
 	// particle_list[0].x(i_data.row(0));
@@ -66,15 +72,15 @@ int main(const int argc, const char* argv[]){
 
 	// MD_Simulation(particle_list, g_para);
 
-	cout << "positions: \n";
-	particle_list[0].head();
-	cout << "x 1\n" << particle_list[0].x() << endl;
-	particle_list[0].next();
-	cout << "x 2\n" << particle_list[0].x() << endl;
-	particle_list[0].next();
-	cout << "x 3\n" << particle_list[0].x() << endl;
-	particle_list[0].next();
-	cout << "x 4\n" << particle_list[0].x() << endl;
+	// cout << "positions: \n";
+	// particle_list[0].head();
+	// cout << "x 1\n" << particle_list[0].x() << endl;
+	// particle_list[0].next();
+	// cout << "x 2\n" << particle_list[0].x() << endl;
+	// particle_list[0].next();
+	// cout << "x 3\n" << particle_list[0].x() << endl;
+	// particle_list[0].next();
+	// cout << "x 4\n" << particle_list[0].x() << endl;
 
 	// sum_force(particle_list[0], one_force, g_para);
 	// particle_list[0].head();
