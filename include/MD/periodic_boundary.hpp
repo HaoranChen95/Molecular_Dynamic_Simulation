@@ -4,7 +4,7 @@
 #include "additional.hpp"
 #include "MDParameter.hpp"
 
-Vec periodic_force(const Vec x_a, const Vec x_b, double (*force)(const MDParameter parm, const double r), const MDParameter parm);
-Vec periodic_boundary(Vec x, const MDParameter parm);
+Vec periodic_vector(const MDParameter parm, const Vec q_a, const Vec q_b);
+Vec periodic_coordinate(const MDParameter parm, const Vec q);
 
 #endif

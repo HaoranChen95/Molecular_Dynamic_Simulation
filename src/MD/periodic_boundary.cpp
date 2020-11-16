@@ -1,20 +1,19 @@
 #include "periodic_boundary.hpp"
 
-Vec periodic_force(const Vec x_a, const Vec x_b, double (*force)(const MDParameter parm, const double r), const MDParameter parm){
-	Vec f{x_a - x_b};
-	if (f == Vec::Zero(3)) {return f;}
+Vec periodic_vector(const MDParameter parm, const Vec q_a, const Vec q_b){
+	Vec vec{q_a - q_b};
+	if (vec == Vec::Zero(3)) {return vec;}
 	for (int i{0}; i<3; ++i){
-		f[i] = remainder(f[i], parm.boundary_width());
+		vec[i] = remainder(vec[i], parm.boundary_width());
 	}
-	f = force(parm, f.norm())/f.norm()*f;
-	return f;
+	return vec;
 }
 
-Vec periodic_boundary(const Vec x, const MDParameter parm){
-	Vec n_x{Vec::Zero(3)};
+Vec periodic_coordinate(const MDParameter parm, const Vec q){
+	Vec n_q{Vec::Zero(3)};
 	for (int i{0}; i<3; ++i){
-		n_x[i] = remainder(x[i], parm.boundary_width());
-		if(n_x[i] < 0){n_x[i] = n_x[i] + parm.boundary_width();}
+		n_q[i] = remainder(q[i], parm.boundary_width());
+		if(n_q[i] < 0){n_q[i] += parm.boundary_width();}
 	}
-	return n_x;
+	return n_q;
 }
