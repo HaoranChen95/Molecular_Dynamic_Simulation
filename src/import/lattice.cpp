@@ -19,7 +19,7 @@ void initial_lattice(ParticleList *p_l, const MDParameter parm)
 
 				temp[0]	= distribution(generator);
 				temp[1] = distribution(generator);
-俄				temp[2] = distribution(generator); 
+				temp[2] = distribution(generator); 
 				p_l[0].v(temp);
 			}
 		}
