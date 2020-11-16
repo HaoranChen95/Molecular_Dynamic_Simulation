@@ -1,21 +1,6 @@
 #include "velocity_verlet.hpp"
 using namespace std;
 
-void sum_force(ParticleList p_l, double (*force)(const MDParameter parm, const double r), MDParameter parm){
-	// p_l.head();
-	// while (!p_l.is_end()){
-	// 	p_l.set_temp();
-	// 	p_l.temp_f(Vec::Zero(3));
-	// 	p_l.next();
-	// 	if(p_l.is_end()) {p_l.head();}
-	// 	while (!p_l.is_self()){
-	// 		p_l.temp_f(p_l.temp_f() + periodic_vector(p_l.temp_x(), p_l.x(), force, parm));
-	// 		p_l.next();
-	// 		if(p_l.is_end()) {p_l.head();}
-	// 	}; 
-	// 	p_l.next();
-	// }
-}
 
 void velocity_verlet_x(ParticleList *p_l, const MDParameter parm){
 	// p_l[0].head();
@@ -35,5 +20,4 @@ void velocity_verlet_v(ParticleList *p_l, const MDParameter parm){
 		p_l[0].next();
 		p_l[1].next();
 	}
-
 }

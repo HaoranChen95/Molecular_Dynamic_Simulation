@@ -9,6 +9,7 @@ using namespace std;
 //TODO change the force potential to cut LJ potential and force
 //TODO change the in put data class
 //TODO add energy calculation function
+//TODO add efficient radius
 
 int main(const int argc, const char* argv[]){
 	cout << "entering main" << endl;
@@ -27,7 +28,7 @@ int main(const int argc, const char* argv[]){
 	// MD simulations goes here
 	std::list<Particle> p_l{init_lattice(g_para)};
 	if (!p_l.empty()){
-		cout << "first particle position" << p_l.front().x << endl;
+		cout << "first particle position" << p_l.front().q << endl;
 	}
 	
 
