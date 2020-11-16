@@ -3,6 +3,6 @@
 
 #include "lattice.hpp"
 
-std::list<std::list<Particle*>> neighbor(const MDParameter parm, const std::list<Particle> p_l);
+std::list<std::list<std::list<Particle>::const_iterator>> neighbor(const MDParameter parm, const std::list<Particle> p_l);
 
 #endif

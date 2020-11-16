@@ -31,7 +31,7 @@ int main(const int argc, const char* argv[]){
 		cout << "first particle position" << p_l.front().q << endl;
 	}
 
-	std::list<std::list<Particle*>> p_neighbor{neighbor(g_para, p_l)};
+	std::list<std::list<std::list<Particle>::const_iterator>> p_neighbor{neighbor(g_para, p_l)};
 
 
 	// Mat i_data; //TODO change the read_data return data type

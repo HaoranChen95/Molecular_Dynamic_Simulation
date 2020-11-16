@@ -33,6 +33,7 @@ double MDParameter::time_step() const			{return time_step_;}
 double MDParameter::time_length() const			{return time_length_;}
 double MDParameter::lattice_constant() const	{return lattice_constant_;}
 double MDParameter::kT() const					{return kT_;}
+double MDParameter::neighbor() const			{return neighbor_;}
 
 /** @brief Parse key-value parameter from input/input.txt
  *
