@@ -44,5 +44,13 @@ class ParticleList{ //TODO change to use templet list
 
 };
 
+struct Particle{
+	Vec x;
+	Vec v;
+	Vec f0;
+	Vec f1;
+	double u;
+};
+
 
 #endif

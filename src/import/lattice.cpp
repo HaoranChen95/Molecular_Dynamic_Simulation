@@ -19,24 +19,13 @@ void initial_lattice(ParticleList *p_l, const MDParameter parm)
 
 				temp[0]	= distribution(generator);
 				temp[1] = distribution(generator);
-				temp[2] = distribution(generator); 
-				cout << p_l[0].x() << endl;
-				if (k + 1  == parm.lattice_edge_particles()){
-					if (j + 1  == parm.lattice_edge_particles()){
-						if (i + 1  == parm.lattice_edge_particles()){
-							// TODO there still not clear
-						}
-					}
-					else{
-						for (unsigned long l; l+1 < parm.lattice_edge_particles(); ++l){
-						temp[2] = 0;}
-						p_l[0].v(temp);
-					}
-				}
-				else{
-					p_l[0].v(temp);
-				}
+俄				temp[2] = distribution(generator); 
+				p_l[0].v(temp);
 			}
 		}
 	}
+}
+
+void init_lattice(std::list<Particle>& p_l, const MDParameter parm){
+
 }
