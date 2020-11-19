@@ -5,18 +5,19 @@ using namespace std;
  * @brief build the initial lattice and calculate the force
  * 
  * @param parm 
- * @return std::forward_list<Particle> 
+ * @return ParticleList 
  */
 
-std::forward_list<Particle> init_lattice(const MDParameter parm){
-	std::forward_list<Particle> p_l;
+ParticleList init_lattice(const MDParameter parm){
+	ParticleList p_l;
 	
 	std::random_device rd{};
 	std::mt19937 generator{rd()};
 	std::normal_distribution<double> distribution(0.0,parm.kT());
 	Vec temp{Vec::Zero(3)};
 	
-	for (unsigned long i{0}; i < parm.lattice_edge_particles(); ++i){
+	/** @brief first build particles with lattice position and normal distribution velocities*/ 
+	for (unsigned long i{0}; i < parm.lattice_edge_particles(); ++i){ 
 		for (unsigned long j{0}; j < parm.lattice_edge_particles(); ++j){
 			for (unsigned long k{0}; k < parm.lattice_edge_particles(); ++k){
 				Particle new_particle;
@@ -36,16 +37,24 @@ std::forward_list<Particle> init_lattice(const MDParameter parm){
 		}
 	}
 
+	/**
+	 * @brief sum the velocities to shift the system total velocity back to 0 and calculate the force
+	 */
 	temp = Vec::Zero(3);
 	for (Particle p : p_l){
 		temp += p.v; 
 	}
 	temp = temp/(double)parm.N();
 
-	std::forward_list<Particle>::iterator p_l_iter;
+	ParticleList::iterator p_l_iter;
 	for (p_l_iter = p_l.begin(); p_l_iter != p_l.end(); p_l_iter++){
 		p_l_iter->v -= temp; 
-		p_l_iter->f0 = sum_force(parm, *p_l_iter, p_l);
+
+		std::forward_list<ParticleList::const_iterator> p_il;
+		for (ParticleList::iterator p_i{p_l.begin()};p_i != p_l.end(); ++p_i){
+			p_il.push_front(p_i);
+		}
+		p_l_iter->f0 = sum_force(parm, *p_l_iter, p_il);
 	}
 
 
@@ -53,10 +62,19 @@ std::forward_list<Particle> init_lattice(const MDParameter parm){
 	return p_l;
 }
 
-Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<Particle> p_l){
+/**
+ * @brief calculate the force at particle from the other particle const_iterator list
+ * 
+ * @param[in] parm 
+ * @param[in] part 
+ * @param[in] p_il 
+ * @return Vec 
+ */
+Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<ParticleList::const_iterator> p_il){
 	Vec f{Vec::Zero(3)};
-	for (Particle i : p_l){
-		f += Cut_LJ_Force(parm, part.v, i.v);
+
+	for (ParticleList::const_iterator i : p_il){
+		f += Cut_LJ_Force(parm, part.x, (*i).x);
 	}
 	return f;
 }

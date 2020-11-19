@@ -14,8 +14,10 @@ struct Particle{
 	Vec f1;
 };
 
-std::forward_list<Particle> init_lattice(const MDParameter parm);
+typedef std::forward_list<Particle> ParticleList;
 
-Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<Particle> p_l); //TODO change the partical list to part_l_iter
+ParticleList init_lattice(const MDParameter parm);
+
+Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<ParticleList::const_iterator> p_ill);
 
 #endif

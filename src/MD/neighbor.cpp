@@ -14,7 +14,7 @@ std::forward_list<std::forward_list<std::forward_list<Particle>::const_iterator>
 				if( r < parm.neighbor() && r != 0){
 					part_pl.push_front(part_l_iter);
 				}
-			//part_pll.push_frpart_pl.push_front(part_pl);
+			//part_pll.push_fr part_pl.push_front(part_pl);
 			}
 		}
 	}

@@ -11,7 +11,6 @@
 
 
 //test part
-#include "partical.hpp"
 
 #include "lattice.hpp"
 #include "neighbor.hpp"
