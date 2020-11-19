@@ -57,7 +57,7 @@ ParticleList init_lattice(const MDParameter parm){
 		// p_l_iter->f0 = sum_force(parm, *p_l_iter, p_il);
 	}
 
-
+	p_l.reverse();
 	cout << "initial latice with position and velocities is built." << endl;
 	return p_l;
 }

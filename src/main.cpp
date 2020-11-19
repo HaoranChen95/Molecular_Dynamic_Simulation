@@ -29,14 +29,9 @@ int main(const int argc, const char* argv[]){
 	ParticleList p_l{init_lattice(g_para)};
 	if (!p_l.empty()){
 		cout << "first particle position\n" << p_l.front().x << endl;
-		cout << "first step position\n" << velocity_verlet_x(g_para, p_l.front()) << endl;
+		cout << &(*p_l.cbegin()) << endl;
+		MD_Simulation(g_para, p_l);
 	}
-
-	MD_Simulation(g_para, p_l);
-
-
-	// Mat i_data; //TODO change the read_data return data type
-	// read_data(i_data,8);
 
 	cout << "leaving main" << endl;
 	return 0;

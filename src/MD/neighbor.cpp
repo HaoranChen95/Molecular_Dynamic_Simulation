@@ -1,22 +1,27 @@
 #include "neighbor.hpp"
 
-std::forward_list<std::forward_list<ParticleList::const_iterator>> neighbor(const MDParameter parm, const ParticleList p_l){
-	std::forward_list<std::forward_list<ParticleList::const_iterator>> part_pll;
-	if (!p_l.empty()){
-		ParticleList::const_iterator part_l_iter;
-		for (part_l_iter = p_l.begin(); part_l_iter != p_l.end(); part_l_iter++){
-			std::forward_list<ParticleList::const_iterator> part_pl;
-			part_pl.push_front(part_l_iter);//todo finish the part_pll
-			ParticleList::const_iterator another_part_l_iter;
+using namespace std;
 
-			for (another_part_l_iter = p_l.begin(); another_part_l_iter != p_l.end(); another_part_l_iter++){
-				double r{periodic_vector(parm, (*part_l_iter).x, (*another_part_l_iter).x).norm()};
-				if( r < parm.neighbor() && r != 0){
-					part_pl.push_front(part_l_iter);
+forward_list<forward_list<const Particle*>> neighbor(const MDParameter parm, const ParticleList p_l){
+	cout << "entering neighbor function"<< endl;
+	forward_list<forward_list<const Particle*>> p_l_pll;
+	if (!p_l.empty()){
+		cout << &(*p_l.cbegin()) << endl;
+		forward_list<const Particle*> p_l_pl;
+		for (ParticleList::const_iterator p_l_ci {p_l.cbegin()}; p_l_ci != p_l.cend(); ++p_l_ci){
+			p_l_pl.clear();
+			for (ParticleList::const_iterator another_p_l_ci{p_l.cbegin()}; another_p_l_ci != p_l.cend(); ++another_p_l_ci){
+				
+				if (p_l_ci == another_p_l_ci){continue;}
+				else if( periodic_vector(parm, (*p_l_ci).x, (*another_p_l_ci).x).norm() < parm.neighbor()){
+					p_l_pl.push_front(&(*p_l_ci));
 				}
-			//part_pll.push_fr part_pl.push_front(part_pl);
 			}
+			p_l_pl.push_front(&(*p_l_ci));
+			p_l_pll.push_front(p_l_pl);
 		}
+		p_l_pll.reverse();
 	}
-	return part_pll;
+	cout << "ending neighbor function"<< endl;
+	return p_l_pll;
 }

@@ -8,6 +8,11 @@ A[MDParameter] --> B[lattice]
 A --> C[periodic_boundary]
 B --> D[neighbor]
 C --> D
+C --> E[potential]
+B --> F[velocity_verlet]
+E --> F
+D --> G[MD_Simulation]
+F --> G
 ```
 
 ## Lennad-Jones-Potential
