@@ -6,7 +6,6 @@ forward_list<forward_list<const Particle*>> neighbor(const MDParameter parm, con
 	cout << "entering neighbor function"<< endl;
 	forward_list<forward_list<const Particle*>> p_l_pll;
 	if (!p_l.empty()){
-		cout << &(*p_l.cbegin()) << endl;
 		forward_list<const Particle*> p_l_pl;
 		for (ParticleList::const_iterator p_l_ci {p_l.cbegin()}; p_l_ci != p_l.cend(); ++p_l_ci){
 			p_l_pl.clear();

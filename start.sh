@@ -7,7 +7,7 @@ epsilon=(1.0)
 sigma=(1.0)
 m=(1.0)
 boundary_width=(10.0)
-time_length=(30)
+time_length=(1)
 time_step=(0.001)
 
 parent_directory="output"
@@ -24,7 +24,6 @@ for i in "${N[@]}"; do
 							mkdir -p ${dir}
 							cp build/main ${dir}/${name}
 							cp input/input.txt ${dir}/input.txt
-							cp input/init_data.txt ${dir}/init_data.txt
 							cd ${dir}
 							nohup ./${name} ${n} ${o} &
 							cd ${SCRIPT_DIR}

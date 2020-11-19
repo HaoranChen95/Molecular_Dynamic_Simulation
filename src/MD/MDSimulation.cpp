@@ -4,8 +4,10 @@ using namespace std;
 void MD_Simulation(const MDParameter parm, ParticleList p_l){
 
 	cout << "entering MD_Simulation" << endl;
-	std::forward_list<std::forward_list<const Particle *>> p_neighbor ;//TODO there is a big problem with neighbor function
-	p_neighbor = std::move(neighbor(parm, p_l));
+	std::forward_list<std::forward_list<const Particle *>> p_neighbor {neighbor(parm, p_l)};//TODO there is a big problem with neighbor function
+
+	cout << "!!!! final position\n" << (*p_neighbor.front().front()).x << endl;
+	cout << "!!!! original position\n" << (*neighbor(parm, p_l).front().front()).x << endl;
 	/**
 	 * @brief calculate the f0 
 	 */
@@ -15,7 +17,7 @@ void MD_Simulation(const MDParameter parm, ParticleList p_l){
 	// }
 	// int counter = 0;
 	// for(std::forward_list<ParticleList::const_iterator> p_l_il : p_neighbor){
-	cout << (*p_neighbor.front().front()).x << endl;
+	
 	// cout << counter <<endl;
 
 
