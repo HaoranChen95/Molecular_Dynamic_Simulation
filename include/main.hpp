@@ -10,12 +10,6 @@
 #include "MDSimulation.hpp"
 
 
-//test part
-
-#include "lattice.hpp"
-#include "neighbor.hpp"
-
-
 MDParameter g_para;
 
 

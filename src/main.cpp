@@ -32,7 +32,7 @@ int main(const int argc, const char* argv[]){
 		cout << "first step position\n" << velocity_verlet_x(g_para, p_l.front()) << endl;
 	}
 
-	std::forward_list<std::forward_list<ParticleList::const_iterator>> p_neighbor{neighbor(g_para, p_l)};
+	MD_Simulation(g_para, p_l);
 
 
 	// Mat i_data; //TODO change the read_data return data type

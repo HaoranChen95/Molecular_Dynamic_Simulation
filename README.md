@@ -1,5 +1,15 @@
 # Molecular_Dynamic_Simulation
 
+## file structure
+
+```mermaid
+graph TD
+A[MDParameter] --> B[lattice]
+A --> C[periodic_boundary]
+B --> D[neighbor]
+C --> D
+```
+
 ## Lennad-Jones-Potential
 
 $$

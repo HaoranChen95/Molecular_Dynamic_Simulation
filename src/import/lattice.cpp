@@ -38,7 +38,7 @@ ParticleList init_lattice(const MDParameter parm){
 	}
 
 	/**
-	 * @brief sum the velocities to shift the system total velocity back to 0 and calculate the force
+	 * @brief sum the velocities to shift the system total velocity back to 0
 	 */
 	temp = Vec::Zero(3);
 	for (Particle p : p_l){
@@ -50,31 +50,14 @@ ParticleList init_lattice(const MDParameter parm){
 	for (p_l_iter = p_l.begin(); p_l_iter != p_l.end(); p_l_iter++){
 		p_l_iter->v -= temp; 
 
-		std::forward_list<ParticleList::const_iterator> p_il;
-		for (ParticleList::iterator p_i{p_l.begin()};p_i != p_l.end(); ++p_i){
-			p_il.push_front(p_i);
-		}
-		p_l_iter->f0 = sum_force(parm, *p_l_iter, p_il);
+		// std::forward_list<ParticleList::const_iterator> p_il;
+		// for (ParticleList::iterator p_i{p_l.begin()};p_i != p_l.end(); ++p_i){
+		// 	p_il.push_front(p_i);
+		// }
+		// p_l_iter->f0 = sum_force(parm, *p_l_iter, p_il);
 	}
 
 
-	cout << "initial latice is built." << endl;
+	cout << "initial latice with position and velocities is built." << endl;
 	return p_l;
-}
-
-/**
- * @brief calculate the force at particle from the other particle const_iterator list
- * 
- * @param[in] parm 
- * @param[in] part 
- * @param[in] p_il 
- * @return Vec 
- */
-Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<ParticleList::const_iterator> p_il){
-	Vec f{Vec::Zero(3)};
-
-	for (ParticleList::const_iterator i : p_il){
-		f += Cut_LJ_Force(parm, part.x, (*i).x);
-	}
-	return f;
 }

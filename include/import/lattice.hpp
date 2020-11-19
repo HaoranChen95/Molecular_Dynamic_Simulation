@@ -5,7 +5,6 @@
 #include <forward_list>
 
 #include "MDParameter.hpp"
-#include "potential.hpp"
 
 struct Particle{
 	Vec x;
@@ -17,7 +16,5 @@ struct Particle{
 typedef std::forward_list<Particle> ParticleList;
 
 ParticleList init_lattice(const MDParameter parm);
-
-Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<ParticleList::const_iterator> p_ill);
 
 #endif
