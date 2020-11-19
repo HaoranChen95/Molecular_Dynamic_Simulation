@@ -26,12 +26,13 @@ int main(const int argc, const char* argv[]){
 
 
 	// MD simulations goes here
-	std::list<Particle> p_l{init_lattice(g_para)};
+	std::forward_list<Particle> p_l{init_lattice(g_para)};
 	if (!p_l.empty()){
-		cout << "first particle position" << p_l.front().q << endl;
+		cout << "first particle position\n" << p_l.front().x << endl;
+		cout << "first step position\n" << velocity_verlet_x(g_para, p_l.front()) << endl;
 	}
 
-	std::list<std::list<std::list<Particle>::const_iterator>> p_neighbor{neighbor(g_para, p_l)};
+	std::forward_list<std::forward_list<std::forward_list<Particle>::const_iterator>> p_neighbor{neighbor(g_para, p_l)};
 
 
 	// Mat i_data; //TODO change the read_data return data type

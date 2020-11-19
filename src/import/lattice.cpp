@@ -5,11 +5,11 @@ using namespace std;
  * @brief build the initial lattice and calculate the force
  * 
  * @param parm 
- * @return std::list<Particle> 
+ * @return std::forward_list<Particle> 
  */
 
-std::list<Particle> init_lattice(const MDParameter parm){
-	std::list<Particle> p_l;
+std::forward_list<Particle> init_lattice(const MDParameter parm){
+	std::forward_list<Particle> p_l;
 	
 	std::random_device rd{};
 	std::mt19937 generator{rd()};
@@ -24,27 +24,27 @@ std::list<Particle> init_lattice(const MDParameter parm){
 				temp[0]	= (i+0.5)*parm.lattice_constant();
 				temp[1] = (j+0.5)*parm.lattice_constant();
 				temp[2] = (k+0.5)*parm.lattice_constant();
-				new_particle.q = temp;
+				new_particle.x = temp;
 
 				temp[0]	= distribution(generator);
 				temp[1] = distribution(generator);
 				temp[2] = distribution(generator); 
-				new_particle.p = temp*parm.m();
+				new_particle.v = temp;
 
-				p_l.push_back(new_particle);
+				p_l.push_front(new_particle);
 			}
 		}
 	}
 
 	temp = Vec::Zero(3);
 	for (Particle p : p_l){
-		temp += p.p; 
+		temp += p.v; 
 	}
 	temp = temp/(double)parm.N();
 
-	std::list<Particle>::iterator p_l_iter;
+	std::forward_list<Particle>::iterator p_l_iter;
 	for (p_l_iter = p_l.begin(); p_l_iter != p_l.end(); p_l_iter++){
-		p_l_iter->p -= temp; 
+		p_l_iter->v -= temp; 
 		p_l_iter->f0 = sum_force(parm, *p_l_iter, p_l);
 	}
 
@@ -53,10 +53,10 @@ std::list<Particle> init_lattice(const MDParameter parm){
 	return p_l;
 }
 
-Vec sum_force(const MDParameter parm, const Particle part, const std::list<Particle> p_l){
+Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<Particle> p_l){
 	Vec f{Vec::Zero(3)};
 	for (Particle i : p_l){
-		f += Cut_LJ_Force(parm, part.p, i.p);
+		f += Cut_LJ_Force(parm, part.v, i.v);
 	}
 	return f;
 }

@@ -2,20 +2,20 @@
 #define LATTICE_HPP_
 
 #include <random>
-#include <list>
+#include <forward_list>
 
 #include "MDParameter.hpp"
 #include "potential.hpp"
 
 struct Particle{
-	Vec q;
-	Vec p;
+	Vec x;
+	Vec v;
 	Vec f0;
 	Vec f1;
 };
 
-std::list<Particle> init_lattice(const MDParameter parm);
+std::forward_list<Particle> init_lattice(const MDParameter parm);
 
-Vec sum_force(const MDParameter parm, const Particle part, const std::list<Particle> p_l);
+Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<Particle> p_l); //TODO change the partical list to part_l_iter
 
 #endif
