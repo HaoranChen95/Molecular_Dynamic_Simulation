@@ -4,7 +4,7 @@ using namespace std;
 void MD_Simulation(const MDParameter parm, ParticleList p_l){
 
 	cout << "entering MD_Simulation" << endl;
-	std::forward_list<std::forward_list<const Particle *>> p_neighbor {neighbor(parm, p_l)};//TODO there is a big problem with neighbor function
+	static std::forward_list<std::forward_list<const Particle *>> p_neighbor {neighbor(parm, p_l)};//TODO there is a big problem with neighbor function
 
 	cout << "!!!! final position\n" << (*p_neighbor.front().front()).x << endl;
 	cout << "!!!! original position\n" << (*neighbor(parm, p_l).front().front()).x << endl;
