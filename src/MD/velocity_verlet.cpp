@@ -19,11 +19,12 @@ Vec velocity_verlet_v(const MDParameter parm, const Particle part){
  * @param[in] p_il 
  * @return Vec 
  */
-Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<ParticleList::const_iterator> p_il){
+Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<const Particle*> p_pl){
 	Vec f{Vec::Zero(3)};
-
-	for (ParticleList::const_iterator i : p_il){
+	cout << "in sum force" <<endl;
+	for (const Particle* i : p_pl){
 		f += Cut_LJ_Force(parm, part.x, (*i).x);
 	}
+	cout << f << endl;
 	return f;
 }

@@ -12,9 +12,12 @@ void MD_Simulation(const MDParameter parm, ParticleList p_l){
 	 * @brief calculate the f0 
 	 */
 
-	// for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-	// 	p_l_i -> f0 = sum_force(parm, (*p_l_i), p_l);
-	// }
+	forward_list<const Particle*> p_pl;
+	for (const Particle p : p_l){p_pl.push_front(&p);}
+	for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+		p_l_i -> f0 = sum_force(parm, (*p_l_i), p_pl);//TODO 这里输入的数据一定有问题！
+	}
+	cout <<"first force\n" << p_l.front().f0 <<endl;
 	// int counter = 0;
 	// for(std::forward_list<ParticleList::const_iterator> p_l_il : p_neighbor){
 	

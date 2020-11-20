@@ -29,11 +29,11 @@ int main(const int argc, const char* argv[]){
 	ParticleList p_l{init_lattice(g_para)};
 	if (!p_l.empty()){
 		cout << "first particle position\n" << p_l.front().x << endl;
-		static std::forward_list<std::forward_list<const Particle *>> p_neighbor {all_nodes(g_para, p_l)};//TODO there is a big problem with neighbor function
+		// static std::forward_list<std::forward_list<const Particle *>> p_neighbor {all_nodes(g_para, p_l)};//TODO there is a big problem with neighbor function
 
-		cout << "!!!! final position\n" << (*(p_neighbor.front().front())).x << endl;
-		cout << "!!!! original position\n" << (*all_nodes(g_para, p_l).front().front()).x << endl;
-		//MD_Simulation(g_para, p_l);
+		// cout << "!!!! final position\n" << (*(p_neighbor.front().front())).x << endl;
+		// cout << "!!!! original position\n" << (*all_nodes(g_para, p_l).front().front()).x << endl;
+		MD_Simulation(g_para, p_l);
 	}
 
 	cout << "leaving main" << endl;

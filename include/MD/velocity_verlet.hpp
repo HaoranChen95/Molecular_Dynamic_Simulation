@@ -7,6 +7,6 @@
 
 Vec velocity_verlet_x(const MDParameter parm, const Particle part);
 Vec velocity_verlet_v(const MDParameter parm, const Particle part);
-Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<ParticleList::const_iterator> p_ill);
+Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<const Particle*> p_pl);
 
 #endif
