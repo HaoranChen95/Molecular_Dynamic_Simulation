@@ -7,8 +7,8 @@ epsilon=(1.0)
 sigma=(1.0)
 m=(1.0)
 boundary_width=(10.0)
-time_length=(1)
-time_step=(0.001)
+time_length=(10)
+time_step=(0.002)
 
 parent_directory="output"
 

@@ -3,7 +3,6 @@ using namespace std;
 
 
 Vec velocity_verlet_x(const MDParameter parm, const Particle part){
-	cout <<"X\n"<< part.x <<endl <<"V\n"<< part.v << endl <<"F\n"<< part.f0 << endl;
 	return periodic_coordinate(parm, part.x + part.v*parm.time_step() + part.f0/2.0/parm.m()*pow(parm.time_step(),2));
 }
 
@@ -19,12 +18,11 @@ Vec velocity_verlet_v(const MDParameter parm, const Particle part){
  * @param[in] p_il 
  * @return Vec 
  */
-Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<const Particle*> p_pl){
+//TODO change the in put particle list to pointer list
+Vec sum_force(const MDParameter parm, const Particle part, const std::forward_list<Particle> p_l){
 	Vec f{Vec::Zero(3)};
-	cout << "in sum force" <<endl;
-	for (const Particle* i : p_pl){
-		f += Cut_LJ_Force(parm, part.x, (*i).x);
+	for (const Particle i : p_l){
+		f += Cut_LJ_Force(parm, part.x, i.x);
 	}
-	cout << f << endl;
 	return f;
 }

@@ -1,7 +1,7 @@
 #include "periodic_boundary.hpp"
 
 Vec periodic_vector(const MDParameter parm, const Vec q_a, const Vec q_b){
-	Vec vec{q_a - q_b};
+	Vec vec{q_b - q_a};
 	if (vec == Vec::Zero(3)) {return vec;}
 	for (int i{0}; i<3; ++i){
 		vec[i] = remainder(vec[i], parm.boundary_width());
