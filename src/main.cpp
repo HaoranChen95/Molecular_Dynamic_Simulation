@@ -33,7 +33,26 @@ int main(const int argc, const char* argv[]){
 
 		// cout << "!!!! final position\n" << (*(p_neighbor.front().front())).x << endl;
 		// cout << "!!!! original position\n" << (*all_nodes(g_para, p_l).front().front()).x << endl;
-		MD_Simulation(g_para, p_l);
+		// MD_Simulation(g_para, p_l);
+		int i_test = 0;
+		forward_list<Particle*> p_pl; //TODO there is the problem!!!!
+		cout << "the Particle list (positions):" << endl;
+		for (Particle p : p_l){
+			cout << "a" << p.x << endl;
+			p_pl.push_front(&p);
+			cout << "b " << (*p_pl.f ront()).x << endl;
+			cout << "i_test " << i_test <<endl;
+			++i_test;
+		}
+
+		i_test = 0;
+		cout << "the Particle pointer list (positions):" << endl;
+		for (auto i : p_pl){
+			cout << "c " << (*i).x << endl;
+			cout << "i_test " << i_test <<endl;
+			++i_test;
+		}
+
 	}
 
 	cout << "leaving main" << endl;

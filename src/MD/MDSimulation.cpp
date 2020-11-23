@@ -12,53 +12,67 @@ void MD_Simulation(const MDParameter parm, ParticleList p_l){
 	 * @brief calculate the f0 
 	 */
 
-	// forward_list<const Particle*> p_pl; //TODO there is the problem!!!!
+
+	// int i_test = 0;
+	// forward_list<Particle*> p_pl; //TODO there is the problem!!!!
 	// cout << "the Particle list (positions):" << endl;
-	// for (const Particle p : p_l){
-	// 	cout << p.x << endl;
-	// 	p_pl.push_front(dynamic_cast<const Particle *>(&p));}
+	// for (Particle p : p_l){
+	// 	cout << "a" << p.x << endl;
+	// 	p_pl.push_front(&p);
+	// 	cout << "b " << (*p_pl.front()).x << endl;
+	// 	cout << "i_test " << i_test <<endl;
+	// 	++i_test;
+	// 	}
+
+	// i_test = 0;
 	// cout << "the Particle pointer list (positions):" << endl;
-	// for (const Particle* i : p_pl){cout << (*i).x << endl;}
+	// for (auto i : p_pl){cout << "c " << (*i).x << endl;
+	// cout << "i_test " << i_test <<endl;
+	// ++i_test;
+	// }
 
-	for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-		p_l_i -> f0 = sum_force(parm, *p_l_i, p_l);
-	}
 
-	unsigned long steps {static_cast<unsigned long>(parm.time_length()/parm.time_step())};
-	for(unsigned long i{0}; i < steps; ++i){
+	// for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 	p_l_i -> f0 = sum_force(parm, *p_l_i, p_l);
+	// }
 
-		for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-			p_l_i -> x = velocity_verlet_x(parm, *p_l_i);
-		}
-		for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-			p_l_i -> f1 = sum_force(parm, *p_l_i, p_l);
-			p_l_i -> v = velocity_verlet_v(parm, *p_l_i);
-			p_l_i -> f0 = (*p_l_i).f1;
-		}
+	// unsigned long steps {static_cast<unsigned long>(parm.time_length()/parm.time_step())};
+	// for(unsigned long i{0}; i < steps; ++i){
 
-		if (i < 3000){
-			double alpha{pow(1.0/2.0*parm.m()*3*parm.N()/kin_energy(parm, p_l),1.0/2.0)};
-			for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-				p_l_i -> v = alpha*(*p_l_i).v;
-			}
-		}
+	// 	for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 		p_l_i -> x = velocity_verlet_x(parm, *p_l_i);
+	// 	}
+	// 	for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 		p_l_i -> f1 = sum_force(parm, *p_l_i, p_l);
+	// 		p_l_i -> v = velocity_verlet_v(parm, *p_l_i);
+	// 		p_l_i -> f0 = (*p_l_i).f1;
+	// 	}
+		
+	// 	if (i < 1000){
+	// 		double alpha{pow(1.0/2.0*parm.m()*3*parm.N()/kin_energy(parm, p_l),1.0/2.0)};
+	// 		for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 			p_l_i -> v = alpha*(*p_l_i).v;
+	// 		}
+	// 	}
 
-		if(i%10 == 0){
-			Mat result {Mat::Zero(1,5)};
-			result(0,0) = i*parm.time_step();
-			result(0,1) = kin_energy(parm, p_l);
-			result(0,2) = pot_energy(parm, p_l);
-			result(0,3) = p_l.front().f0.norm();
+	// 	unsigned check_point {static_cast<unsigned> (0.01/parm.time_step())};
+	// 	if(i%check_point == 0){
+	// 		Mat result {Mat::Zero(1,5)};
+	// 		result(0,0) = i*parm.time_step();
+	// 		double kin_e{kin_energy(parm, p_l)};
+	// 		double pot_e{pot_energy(parm, p_l)};
+	// 		result(0,1) = kin_e;
+	// 		result(0,2) = pot_e;
+	// 		result(0,3) = kin_e + pot_e;
+	// 		Vec sum_v{Vec::Zero(3)};
+	// 		for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 			sum_v += (*p_l_i).v;
+	// 		}
+	// 		result(0,4) = sum_v.norm();
 
-			Vec sum_v{Vec::Zero(3)};
-			for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-				sum_v += (*p_l_i).v;
-			}
-			result(0,4) = sum_v.norm();
-
-			write_data(result);
-			}
-	}
+	// 		write_data(result);
+	// 		}
+	// }
 
 	// for (const Particle p : p_l){cout << p_l.front().f1 <<endl;} //Print f0
 
