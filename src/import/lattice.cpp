@@ -5,11 +5,11 @@ using namespace std;
  * @brief build the initial lattice and calculate the force
  * 
  * @param parm 
- * @return ParticleList 
+ * @return ParticlePtrList 
  */
 
-ParticleList init_lattice(const MDParameter parm){
-	ParticleList p_l;
+ParticlePtrList init_lattice(const MDParameter parm){
+	ParticlePtrList p_l;
 	
 	std::random_device rd{};
 	std::mt19937 generator{rd()};
@@ -32,7 +32,7 @@ ParticleList init_lattice(const MDParameter parm){
 				temp[2] = distribution(generator); 
 				new_particle.v = temp;
 
-				p_l.push_front(new_particle);
+				p_l.push_front(make_shared<Particle>(new_particle));
 			}
 		}
 	}
@@ -41,23 +41,15 @@ ParticleList init_lattice(const MDParameter parm){
 	 * @brief sum the velocities to shift the system total velocity back to 0
 	 */
 	temp = Vec::Zero(3);
-	for (Particle p : p_l){
-		temp += p.v; 
+	for (const shared_ptr<Particle> p : p_l){
+		temp += (*p).v; 
 	}
 	temp = temp/(double)parm.N();
 
-	ParticleList::iterator p_l_iter;
-	for (p_l_iter = p_l.begin(); p_l_iter != p_l.end(); p_l_iter++){
-		p_l_iter->v -= temp; 
-
-		// std::forward_list<ParticleList::const_iterator> p_il;
-		// for (ParticleList::iterator p_i{p_l.begin()};p_i != p_l.end(); ++p_i){
-		// 	p_il.push_front(p_i);
-		// }
-		// p_l_iter->f0 = sum_force(parm, *p_l_iter, p_il);
+	for (shared_ptr<Particle> p : p_l){
+		p -> v -= temp; 
 	}
 
-	p_l.reverse();
 	cout << "initial latice with position and velocities is built." << endl;
 	return p_l;
 }

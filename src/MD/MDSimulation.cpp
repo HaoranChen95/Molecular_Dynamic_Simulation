@@ -1,27 +1,28 @@
 #include "MDSimulation.hpp"
 using namespace std;
 
-void MD_Simulation(const MDParameter parm, ParticleList p_l){
+void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	/**
 	 * @brief calculate the f0 
 	 */
 
-	list<forward_list<const Particle *>> neighbors_l{neighbors_list(parm, p_l)};
+	ParticleCPtrLL nb_ll{neighbors_list(parm, p_l)};
 	cout << "neighbor list is built " << parm.neighbor() << endl;
 	
-	int counter{0};
-
-	for (ParticleCPL::const_iterator nb_pl_it{neighbors_l.front().cbegin()}; nb_pl_it != neighbors_l.front().cend();++nb_pl_it){
-		cout << "first neighbor_x \n" << (*(*nb_pl_it)).x <<endl;
+	int counter{1};
+	int nbs{0};
+	for (ParticleCPtrL nb_l:nb_ll){
+		cout << counter << ":\n" << (*nb_l.front()).x <<endl;
 		++counter;
+
+		nbs = 0;
+		for (ParticleCPtr p: nb_l){
+			cout << periodic_vector(parm, (*nb_l.front()).x, (*p).x).norm() << ", ";
+			++nbs;
+		}
+		cout << endl << "find neighbors: " << nbs << endl;
 	}
-	cout <<counter <<endl;
-	// for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-		
-	// 	cout << (*(*nb_pl).front()).x << endl;
-	// 	//p_l_i -> f0 = sum_force(parm, *p_l_i, *nb_pl);
-	// 	++nb_pl;
-	// }
+	cout << "particles: " << counter <<endl;
 
 	// for(Particle p : p_l){
 	// 	cout << "f\n" << p.f0 << endl;
@@ -30,10 +31,10 @@ void MD_Simulation(const MDParameter parm, ParticleList p_l){
 	// unsigned long steps {static_cast<unsigned long>(parm.time_length()/parm.time_step())};
 	// for(unsigned long i{0}; i < steps; ++i){
 
-	// 	for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 	for(ParticlePtrList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
 	// 		p_l_i -> x = velocity_verlet_x(parm, *p_l_i);
 	// 	}
-	// 	for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 	for(ParticlePtrList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
 	// 		p_l_i -> f1 = sum_force(parm, *p_l_i, p_l);
 	// 		p_l_i -> v = velocity_verlet_v(parm, *p_l_i);
 	// 		p_l_i -> f0 = (*p_l_i).f1;
@@ -41,7 +42,7 @@ void MD_Simulation(const MDParameter parm, ParticleList p_l){
 		
 	// 	if (i < 1000){
 	// 		double alpha{pow(1.0/2.0*parm.m()*3*parm.N()/kin_energy(parm, p_l),1.0/2.0)};
-	// 		for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 		for(ParticlePtrList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
 	// 			p_l_i -> v = alpha*(*p_l_i).v;
 	// 		}
 	// 	}
@@ -56,7 +57,7 @@ void MD_Simulation(const MDParameter parm, ParticleList p_l){
 	// 		result(0,2) = pot_e;
 	// 		result(0,3) = kin_e + pot_e;
 	// 		Vec sum_v{Vec::Zero(3)};
-	// 		for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 		for(ParticlePtrList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
 	// 			sum_v += (*p_l_i).v;
 	// 		}
 	// 		result(0,4) = sum_v.norm();
@@ -69,33 +70,33 @@ void MD_Simulation(const MDParameter parm, ParticleList p_l){
 
 
 	// int counter = 0;
-	// for(std::forward_list<ParticleList::const_iterator> p_l_il : p_neighbor){
+	// for(std::forward_list<ParticlePtrList::const_iterator> p_l_il : p_neighbor){
 	
 	// cout << counter <<endl;
 
 
-	// for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-	// 	for(std::forward_list<ParticleList::const_iterator> p_l_il : p_neighbor){
+	// for(ParticlePtrList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+	// 	for(std::forward_list<ParticlePtrList::const_iterator> p_l_il : p_neighbor){
 	// 		cout << (*p_l_il.front()).x << endl;
 	// 	}
 	// }
 	cout << "finished MD_Simulation" << endl;
 }
 
-double kin_energy(const MDParameter parm, const ParticleList p_l){
+double kin_energy(const MDParameter parm, const ParticlePtrList p_l){
 	double E{0};
-	for(Particle p : p_l){
-		E += p.v.squaredNorm();
-	}
+	// for(Particle p : p_l){
+	// 	E += p.v.squaredNorm();
+	// }
 	return 1/2.0*parm.m()*E;
 }
 
-double pot_energy(const MDParameter parm, const ParticleList p_l){ // TODO need to add neighbor function
+double pot_energy(const MDParameter parm, const ParticleCPtrLL p_neighbor_l){ // TODO need to add neighbor function
 	double E{0};
-	for(Particle p : p_l){
-		for(Particle other_p : p_l){
-			E += Cut_LJ_Potential(parm, p.x, other_p.x);
-		}
-	}
+	// for(ParticleCPtr p : p_l){
+	// 	for(ParticleCPtr other_p : p_l){
+	// 		E += Cut_LJ_Potential(parm, (*p).x, (*other_p).x);
+	// 	}
+	// }
 	return E;
 }

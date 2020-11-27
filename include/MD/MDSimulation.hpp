@@ -5,8 +5,8 @@
 #include "neighbor.hpp"
 #include "write_data.hpp"
 
-void MD_Simulation(const MDParameter parm, ParticleList p_l);
-double kin_energy(const MDParameter parm, const ParticleList p_l);
-double pot_energy(const MDParameter parm, const ParticleList p_l);
+void MD_Simulation(const MDParameter parm, ParticlePtrList p_l);
+double kin_energy(const MDParameter parm, const ParticlePtrList p_l);
+double pot_energy(const MDParameter parm, const ParticleCPtrLL p_l);
 
 #endif
