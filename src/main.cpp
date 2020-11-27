@@ -33,25 +33,26 @@ int main(const int argc, const char* argv[]){
 
 		// cout << "!!!! final position\n" << (*(p_neighbor.front().front())).x << endl;
 		// cout << "!!!! original position\n" << (*all_nodes(g_para, p_l).front().front()).x << endl;
-		// MD_Simulation(g_para, p_l);
-		int i_test = 0;
-		forward_list<Particle*> p_pl; //TODO there is the problem!!!!
-		cout << "the Particle list (positions):" << endl;
-		for (Particle p : p_l){
-			cout << "a" << p.x << endl;
-			p_pl.push_front(&p);
-			cout << "b " << (*p_pl.f ront()).x << endl;
-			cout << "i_test " << i_test <<endl;
-			++i_test;
-		}
+		MD_Simulation(g_para, p_l);
 
-		i_test = 0;
-		cout << "the Particle pointer list (positions):" << endl;
-		for (auto i : p_pl){
-			cout << "c " << (*i).x << endl;
-			cout << "i_test " << i_test <<endl;
-			++i_test;
-		}
+		// int i_test = 0;
+		// forward_list<const Particle*> p_pl; //TODO there is the problem!!!!
+		// cout << "the Particle list (positions):" << endl;
+		// for (forward_list<Particle>::const_iterator p_it{p_l.cbegin()}; p_it != p_l.cend(); ++p_it){
+		// 	cout << "a" << (*p_it).x << endl;
+		// 	p_pl.push_front(&*p_it);
+		// 	cout << "b " << (*p_pl.front()).x << endl;
+		// 	cout << "i_test " << i_test <<endl;
+		// 	++i_test;
+		// }
+
+		// i_test = 0;
+		// cout << "the Particle pointer list (positions):" << endl;
+		// for (auto i : p_pl){
+		// 	cout << "c " << (*i).x << endl;
+		// 	cout << "i_test " << i_test <<endl;
+		// 	++i_test;
+		// }
 
 	}
 

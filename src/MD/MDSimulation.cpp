@@ -2,38 +2,29 @@
 using namespace std;
 
 void MD_Simulation(const MDParameter parm, ParticleList p_l){
-
-	cout << "entering MD_Simulation" << endl;
-	static std::forward_list<std::forward_list<const Particle *>> p_neighbor {neighbor(parm, p_l)};//TODO there is a big problem with neighbor function
-
-	cout << "!!!! final position\n" << (*p_neighbor.front().front()).x << endl;
-	cout << "!!!! original position\n" << (*neighbor(parm, p_l).front().front()).x << endl;
 	/**
 	 * @brief calculate the f0 
 	 */
 
+	list<forward_list<const Particle *>> neighbors_l{neighbors_list(parm, p_l)};
+	cout << "neighbor list is built " << parm.neighbor() << endl;
+	
+	int counter{0};
 
-	// int i_test = 0;
-	// forward_list<Particle*> p_pl; //TODO there is the problem!!!!
-	// cout << "the Particle list (positions):" << endl;
-	// for (Particle p : p_l){
-	// 	cout << "a" << p.x << endl;
-	// 	p_pl.push_front(&p);
-	// 	cout << "b " << (*p_pl.front()).x << endl;
-	// 	cout << "i_test " << i_test <<endl;
-	// 	++i_test;
-	// 	}
-
-	// i_test = 0;
-	// cout << "the Particle pointer list (positions):" << endl;
-	// for (auto i : p_pl){cout << "c " << (*i).x << endl;
-	// cout << "i_test " << i_test <<endl;
-	// ++i_test;
+	for (ParticleCPL::const_iterator nb_pl_it{neighbors_l.front().cbegin()}; nb_pl_it != neighbors_l.front().cend();++nb_pl_it){
+		cout << "first neighbor_x \n" << (*(*nb_pl_it)).x <<endl;
+		++counter;
+	}
+	cout <<counter <<endl;
+	// for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
+		
+	// 	cout << (*(*nb_pl).front()).x << endl;
+	// 	//p_l_i -> f0 = sum_force(parm, *p_l_i, *nb_pl);
+	// 	++nb_pl;
 	// }
 
-
-	// for(ParticleList::iterator p_l_i{p_l.begin()}; p_l_i != p_l.end(); ++p_l_i){
-	// 	p_l_i -> f0 = sum_force(parm, *p_l_i, p_l);
+	// for(Particle p : p_l){
+	// 	cout << "f\n" << p.f0 << endl;
 	// }
 
 	// unsigned long steps {static_cast<unsigned long>(parm.time_length()/parm.time_step())};

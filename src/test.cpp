@@ -1,41 +1,31 @@
-// #include <random>
-// #include <forward_list>
 // #include <iostream>
-// #include "Eigen/Eigen"
-
-// typedef Eigen::Matrix<double, Eigen::Dynamic, 1> Vec;
+// #include <forward_list>
 
 // using namespace std;
 
-// struct Particle{
-// 	Vec x;
-// 	Vec v;
-// 	Vec f0;
-// 	Vec f1;
-// };
-
-// typedef std::forward_list<Particle> ParticleList;
-
-// ParticleList init_lattice(const MDParameter parm);
-
 // main(){
-// 	ParticleList p_l;
-// 	Particle p1;
-// 	p1.x =  
-// 	int i_test = 0;
-// 	forward_list<const Particle*> p_pl; //TODO there is the problem!!!!
-// 	cout << "the Particle list (positions):" << endl;
-// 	for (const Particle p : p_l){
-// 		cout << p.x << endl;
-// 		p_pl.push_front(&p);
-// 		cout << "i_test " << i_test <<endl;
-// 		++i_test;
-// 		}
-
-// 	i_test = 0;
-// 	cout << "the Particle pointer list (positions):" << endl;
-// 	for (const Particle* i : p_pl){cout << (*i).x << endl;
-// 	cout << "i_test " << i_test <<endl;
-// 	++i_test;
+// 	forward_list<int> int_l{0,1,2,3,4,5,6,7,8,9,10};
+// 	forward_list<const int*> int_pl{};
+	
+// 	for (forward_list<int>::const_iterator it{int_l.cbegin()}; it != int_l.cend(); ++it){
+// 		cout <<"a: " << *it << endl;
+// 		int_pl.push_front(&*it);
 // 	}
+
+// 	cout << "the int pointer list (positions):" << endl;
+// 	for (const int* i : int_pl){
+// 		cout << "b: " << (*i) << endl;
+// 	}
+
+// 	int_pl.clear();
+// 	for (int i : int_l){
+// 		int_pl.push_front(&i);
+// 	}
+
+// 	for (const int* i : int_pl){
+// 		cout << "c: " << (*i) << endl;
+// 	}
+// 	// forward_list<int>::const_pointer cp;
+// 	// cp = &int_l.front();
+// 	// cout << *cp << endl;
 // }

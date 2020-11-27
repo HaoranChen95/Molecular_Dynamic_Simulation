@@ -21,6 +21,7 @@ Vec Cut_LJ_Force(const MDParameter parm, const Vec x_a, const Vec x_b){
 	double norm_r = r.norm();
 	if (norm_r > pow(2.0,1.0/6.0)*parm.sigma() || norm_r == 0){return Vec::Zero(3);}
 	else{
-		return -r/norm_r*4.0*parm.epsilon()*(12*pow(parm.sigma(),12)/pow(norm_r,13)-6*pow(parm.sigma(),6)/pow(norm_r,7));
+		norm_r = norm_r / parm.sigma();
+		return -r*(pow(norm_r,-14)-0.5*pow(norm_r,-8));
 	}
 }
