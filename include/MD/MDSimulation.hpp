@@ -7,6 +7,6 @@
 
 void MD_Simulation(const MDParameter parm, ParticlePtrList p_l);
 double kin_energy(const MDParameter parm, const ParticlePtrList p_l);
-double pot_energy(const MDParameter parm, const ParticleCPtrLL p_l);
+double pot_energy(const MDParameter parm, const ParticleCPtrLL p_neighbor_ll);
 
 #endif
