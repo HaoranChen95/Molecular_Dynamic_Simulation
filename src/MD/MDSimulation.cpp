@@ -3,7 +3,7 @@ using namespace std;
 
 void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	/**
-	 * @brief calculate the f0 
+	 * @brief initialize the neighbor list and initialize f0
 	 */
 
 	ParticleCPtrLL nb_ll{neighbors_list(parm, p_l)};
@@ -35,11 +35,11 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 		++nb_ll_it;
 	}
 
-	int counter {0};
-	for (ParticleCPtr p: p_l){
-		cout << counter << ": " << (*p).f0.norm() << endl;
-		++counter;
-	}
+	// int counter {0};
+	// for (ParticleCPtr p: p_l){
+	// 	cout << counter << ": " << (*p).f0.norm() << endl;
+	// 	++counter;
+	// }
 
 	/**
 	 * @brief the main part of MD Simulation
@@ -64,7 +64,8 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 			++nb_ll_it;
 		}
 		
-		if (i < 1000){
+		unsigned equ_time{static_cast<unsigned> (5.0/parm.time_step())};
+		if (i < equ_time){
 			double alpha{pow(1.0/2.0*parm.m()*3*parm.N()/kin_energy(parm, p_l),1.0/2.0)};
 			for(ParticlePtr p : p_l){
 				p -> v = alpha*(*p).v;
@@ -82,7 +83,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 			double pot_e{pot_energy(parm, nb_ll)};
 			result(0,1) = kin_e;
 			result(0,2) = pot_e;
-			result(0,3) = kin_e + pot_e;
+			result(0,3) = kin_e + 0.5 * pot_e;  //TODO the sum potential energy problem
 			Vec sum_v{Vec::Zero(3)};
 			for(ParticlePtr p : p_l){
 				sum_v += (*p).v;

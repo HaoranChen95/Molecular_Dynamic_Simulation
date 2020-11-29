@@ -5,6 +5,8 @@
 //#include "read_data.hpp"
 #include "MDSimulation.hpp"
 
+#include <ctime>
+
 
 MDParameter g_para;
 

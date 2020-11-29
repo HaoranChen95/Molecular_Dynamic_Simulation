@@ -14,6 +14,7 @@ using namespace std;
 int main(const int argc, const char* argv[]){
 	cout << "entering main" << endl;
 	
+	clock_t begin_time{clock()};
 	try{assign(g_para, argc, argv);}
 	catch(const runtime_error& err){
 		cout << err.what() << endl;
@@ -38,28 +39,12 @@ int main(const int argc, const char* argv[]){
 		// }
 		
 		MD_Simulation(g_para, p_l);
-
-		// int i_test = 0;
-		// forward_list<const Particle*> p_pl; //TODO there is the problem!!!!
-		// cout << "the Particle list (positions):" << endl;
-		// for (forward_list<Particle>::const_iterator p_it{p_l.cbegin()}; p_it != p_l.cend(); ++p_it){
-		// 	cout << "a" << (*p_it).x << endl;
-		// 	p_pl.push_front(&*p_it);
-		// 	cout << "b " << (*p_pl.front()).x << endl;
-		// 	cout << "i_test " << i_test <<endl;
-		// 	++i_test;
-		// }
-
-		// i_test = 0;
-		// cout << "the Particle pointer list (positions):" << endl;
-		// for (auto i : p_pl){
-		// 	cout << "c " << (*i).x << endl;
-		// 	cout << "i_test " << i_test <<endl;
-		// 	++i_test;
-		// }
-
 	}
 
-	cout << "leaving main" << endl;
+	long int difftime {1000*(clock() - begin_time)/CLOCKS_PER_SEC};
+	long int diffmin {difftime/60000};
+	long int diffsec {(difftime%60000)/1000};
+	long int diffmsec {difftime%1000};
+	cout << "leaving main, and used time: " << diffmin << " m " << diffsec << " s " << diffmsec << endl;
 	return 0;
 }
