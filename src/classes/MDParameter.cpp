@@ -9,8 +9,11 @@ MDParameter::MDParameter(){
 	m_	=	1.0;
 	epsilon_ = 1.0;
 	sigma_ = 1.0;
+	cout << "sigma:\t\t\t" << sigma_ <<endl;
+
 	density_ = 0.5;
-	lattice_constant_ = pow(density_, -1.0/3);
+	lattice_constant_ = pow(density_, -1.0/3.0);
+	cout << "lattice_constant:\t" << lattice_constant_ << endl;
 	kT_ = 1.0;
 }
 
@@ -40,7 +43,7 @@ double MDParameter::neighbor() const			{return neighbor_;}
  * @param[in] path Path to input.txt file 
  * @param[in] suffix Suffix of key-value pair file, default = ".txt" */
 void MDParameter::read_input(const string& path, const string& suffix){
-	cout << "entering read_para" << endl;
+	// cout << "entering read_para" << endl;
 
 	string n = path + suffix;
 	//const auto a = path.ends_with(suffix);
@@ -98,6 +101,6 @@ void MDParameter::read_input(const string& path, const string& suffix){
 		}
 	}
 	else{cout << "MDParameter::read_input: File could not be opened, path " << n << endl;}
-	cout << "leaving read_input" << endl;
+	// cout << "leaving read_input" << endl;
 }
 

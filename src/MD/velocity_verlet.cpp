@@ -46,3 +46,18 @@ ParticleCPtrLL neighbors_list(const MDParameter parm, const ParticlePtrList p_l)
 	}
 	return nb_pll;
 }
+
+ParticleCPtrLL all_particle_PtrLL(const MDParameter parm, const ParticlePtrList p_l){
+	ParticleCPtrLL nb_pll;
+	for (ParticleCPtr p : p_l){
+		ParticleCPtrL nb_pl{};
+		for (ParticleCPtr other_p : p_l){
+			if(p != other_p){
+				nb_pl.push_front(other_p);
+			}
+		}
+		nb_pl.push_front(p);
+		nb_pll.push_back(nb_pl);
+	}
+	return nb_pll;
+}
