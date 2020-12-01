@@ -9,6 +9,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	ParticleCPtrLL nb_ll{neighbors_list(parm, p_l)};
 	cout << "neighbor list is built " << parm.neighbor() << endl;
 	
+	
 	// int counter{1};
 	// int nbs{0};
 	// for (ParticleCPtrL nb_l:nb_ll){
@@ -116,7 +117,7 @@ double kin_energy(const MDParameter parm, const ParticlePtrList p_l){
 	for(ParticleCPtr p : p_l){
 		E += (*p).v.squaredNorm();
 	}
-	return 1/2.0*parm.m()*E;
+	return 0.5*parm.m()*E;
 }
 
 double pot_energy(const MDParameter parm, const ParticleCPtrLL p_neighbor_ll){ // TODO need to add neighbor function
@@ -126,5 +127,5 @@ double pot_energy(const MDParameter parm, const ParticleCPtrLL p_neighbor_ll){ /
 			E += Cut_LJ_Potential(parm, (*nb_l.front()).x, (*p).x);
 		}
 	}
-	return E;
+	return 0.5*E;
 }

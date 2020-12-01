@@ -8,7 +8,7 @@
 #include <ctime>
 
 
-MDParameter g_para;
+MDParameter parm;
 
 
 

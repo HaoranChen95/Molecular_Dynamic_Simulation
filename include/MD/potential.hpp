@@ -6,4 +6,6 @@
 double Cut_LJ_Potential(const MDParameter parm, const Vec q_a, const Vec q_b);
 Vec Cut_LJ_Force(const MDParameter parm, const Vec q_a, const Vec q_b);
 
+void test_Cut_LJ_Potential(const MDParameter parm);
+
 #endif

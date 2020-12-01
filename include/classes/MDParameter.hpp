@@ -7,6 +7,7 @@
 
 #include "additional.hpp"
 #include "str_split.hpp"
+#include "write_data.hpp"
 
 
 class MDParameter{ //TODO this class have not clear relationship

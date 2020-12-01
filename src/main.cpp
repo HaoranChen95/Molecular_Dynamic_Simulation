@@ -15,32 +15,34 @@ int main(const int argc, const char* argv[]){
 	cout << "entering main" << endl;
 	
 	clock_t begin_time{clock()};
-	try{assign(g_para, argc, argv);}
+	try{assign(parm, argc, argv);}
 	catch(const runtime_error& err){
 		cout << err.what() << endl;
 		return 1;	
 	}
 
-	cout <<"time step:\t\t" << g_para.time_step() << endl;
+	cout <<"time step:\t\t" << parm.time_step() << endl;
 
-	g_para.read_input();
+	parm.read_input();
 
+	test_Cut_LJ_Potential(parm);
 
 	// MD simulations goes here
-	ParticlePtrList p_l{init_lattice(g_para)};
+	ParticlePtrList p_l{init_lattice(parm)};
 	if (!p_l.empty()){
-		cout << "first particle position\n" << (*p_l.front()).x << endl;
-		
 		/** @brief print the p_l*/
 		// int counter{1};
+
 		// for (ParticleCPtr p : p_l){
 		// 	cout << counter << ":\n" << (*p).x << endl;
 		// 	++counter;
 		// }
 		
-		MD_Simulation(g_para, p_l);
+		
+		MD_Simulation(parm, p_l);
 	}
 
+	/** @brief out put program runing time */
 	long int difftime {1000*(clock() - begin_time)/CLOCKS_PER_SEC};
 	long int diffmin {difftime/60000};
 	long int diffsec {(difftime%60000)/1000};

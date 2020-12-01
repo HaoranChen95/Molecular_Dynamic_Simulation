@@ -9,8 +9,8 @@ MDParameter::MDParameter(){
 	m_	=	1.0;
 	epsilon_ = 1.0;
 	sigma_ = 1.0;
-	density_ = 0.85;
-	lattice_constant_ = pow(density_, 1.0/3);
+	density_ = 0.5;
+	lattice_constant_ = pow(density_, -1.0/3);
 	kT_ = 1.0;
 }
 

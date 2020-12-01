@@ -53,3 +53,28 @@ ParticlePtrList init_lattice(const MDParameter parm){
 	cout << "initial latice with position and velocities is built." << endl;
 	return p_l;
 }
+
+
+void write_ParticleList(const ParticlePtrList p_l, const string& path){
+
+	Mat data {Mat::Zero(1, 14)};
+	for (ParticleCPtr p : p_l){
+		data(0) = (*p).x(0);
+		data(1) = (*p).x(1);
+		data(2) = (*p).x(2);
+		data(3) = (*p).x.norm();
+
+		data(5) = (*p).v(0);
+		data(6) = (*p).v(1);
+		data(7) = (*p).v(2);
+		data(8) = (*p).v.norm();
+
+		data(10) = (*p).f0(0);
+		data(11) = (*p).f0(1);
+		data(12) = (*p).f0(2);
+		data(13) = (*p).f0.norm();
+
+		write_data(data, path);
+	}
+
+}
