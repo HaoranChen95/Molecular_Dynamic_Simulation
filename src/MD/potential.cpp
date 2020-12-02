@@ -15,14 +15,13 @@ double Cut_LJ_Potential(const MDParameter parm, const Vec x_a, const Vec x_b){
 	return 4.0*parm.epsilon()*(pow((parm.sigma()/r),12)-pow((parm.sigma()/r),6))+parm.epsilon();
 }
 
-//TODO change norm_r to sigma/r
 Vec Cut_LJ_Force(const MDParameter parm, const Vec x_a, const Vec x_b){
 	Vec r {periodic_vector(parm, x_a, x_b)};
 	double norm_r = r.norm();
 	if (norm_r > pow(2.0,1.0/6.0)*parm.sigma() || norm_r == 0){return Vec::Zero(3);}
 	else{
 		norm_r = norm_r / parm.sigma();
-		return -r*(pow(norm_r,-14)-0.5*pow(norm_r,-8));
+		return -r*48.0*parm.epsilon()*pow(parm.sigma(),-2.0)*(pow(norm_r,-14)-0.5*pow(norm_r,-8));
 	}
 }
 

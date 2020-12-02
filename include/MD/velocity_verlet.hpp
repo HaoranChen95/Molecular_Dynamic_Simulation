@@ -8,10 +8,12 @@
 
 Vec velocity_verlet_x(const MDParameter parm, const Particle part);
 Vec velocity_verlet_v(const MDParameter parm, const Particle part);
-Vec sum_force(const MDParameter parm, const Particle part, const ParticleCPtrL p_l);
+Vec sum_force(const MDParameter parm, const Particle part, const ParticlePtrList p_l);
 bool is_neighbor(const MDParameter parm, const Particle p_a, const Particle p_b);
-ParticleCPtrLL neighbors_list(const MDParameter parm, const ParticlePtrList p_l);
+ParticlePtrLL neighbors_list(const MDParameter parm, const ParticlePtrList p_l);
+ParticlePtrLL neighbors_list_forward(const MDParameter parm, const ParticlePtrList p_l);
 
-ParticleCPtrLL all_particle_PtrLL(const MDParameter parm, const ParticlePtrList p_l);
+ParticlePtrLL all_particle_PtrLL(const MDParameter parm, const ParticlePtrList p_l);
+void write_neighbor_list(const ParticlePtrLL nb_pll, const std::string& path="neighbor_list");
 
 #endif

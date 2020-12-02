@@ -25,7 +25,7 @@ int main(const int argc, const char* argv[]){
 
 	parm.read_input();
 
-	test_Cut_LJ_Potential(parm);
+	// test_Cut_LJ_Potential(parm);
 
 	// MD simulations goes here
 	ParticlePtrList p_l{init_lattice(parm)};

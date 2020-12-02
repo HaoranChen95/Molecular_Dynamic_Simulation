@@ -19,12 +19,12 @@ Vec velocity_verlet_v(const MDParameter parm, const Particle part){
  * @return Vec 
  */
 
-Vec sum_force(const MDParameter parm, const Particle part, const ParticleCPtrL p_pl){
+Vec sum_force(const MDParameter parm, const Particle part, const ParticlePtrList p_pl){
 	Vec f{Vec::Zero(3)};
 	for (ParticleCPtr i : p_pl){
 		f += Cut_LJ_Force(parm, part.x, (*i).x);
 	}
-	return f*48.0*parm.epsilon()*pow(parm.sigma(),-2.0);
+	return f;
 }
 
 bool is_neighbor(const MDParameter parm, const Particle p_a, const Particle p_b){
@@ -32,11 +32,11 @@ bool is_neighbor(const MDParameter parm, const Particle p_a, const Particle p_b)
 	return  r < parm.neighbor() && r != 0;
 }
 
-ParticleCPtrLL neighbors_list(const MDParameter parm, const ParticlePtrList p_l){
-	ParticleCPtrLL nb_pll;
-	for (ParticleCPtr p : p_l){
-		ParticleCPtrL nb_pl{};
-		for (ParticleCPtr other_p : p_l){
+ParticlePtrLL neighbors_list(const MDParameter parm, const ParticlePtrList p_l){
+	ParticlePtrLL nb_pll;
+	for (ParticlePtr p : p_l){
+		ParticlePtrList nb_pl{};
+		for (ParticlePtr other_p : p_l){
 			if(is_neighbor(parm, *p, *other_p)){
 				nb_pl.push_front(other_p);
 			}
@@ -47,11 +47,33 @@ ParticleCPtrLL neighbors_list(const MDParameter parm, const ParticlePtrList p_l)
 	return nb_pll;
 }
 
-ParticleCPtrLL all_particle_PtrLL(const MDParameter parm, const ParticlePtrList p_l){
-	ParticleCPtrLL nb_pll;
-	for (ParticleCPtr p : p_l){
-		ParticleCPtrL nb_pl{};
-		for (ParticleCPtr other_p : p_l){
+ParticlePtrLL neighbors_list_forward(const MDParameter parm, const ParticlePtrList p_l){
+	ParticlePtrLL nb_pll;
+
+	ParticlePtrList::const_iterator p_l_it {p_l.cbegin()};
+	ParticlePtrList::const_iterator other_p_l_it{};
+	while (p_l_it != p_l.cend()){
+		other_p_l_it = p_l_it;
+		++other_p_l_it;
+		ParticlePtrList nb_pl{};
+		while (other_p_l_it != p_l.cend()){
+			if(is_neighbor(parm, **p_l_it, **other_p_l_it)){
+				nb_pl.push_front(*other_p_l_it);
+			}
+			++other_p_l_it;
+		}
+		nb_pl.push_front(*p_l_it);
+		nb_pll.push_back(nb_pl);
+		++p_l_it;
+	}
+	return nb_pll;
+}
+
+ParticlePtrLL all_particle_PtrLL(const MDParameter parm, const ParticlePtrList p_l){
+	ParticlePtrLL nb_pll;
+	for (ParticlePtr p : p_l){
+		ParticlePtrList nb_pl{};
+		for (ParticlePtr other_p : p_l){
 			if(p != other_p){
 				nb_pl.push_front(other_p);
 			}
@@ -60,4 +82,22 @@ ParticleCPtrLL all_particle_PtrLL(const MDParameter parm, const ParticlePtrList 
 		nb_pll.push_back(nb_pl);
 	}
 	return nb_pll;
+}
+
+void write_neighbor_list(const ParticlePtrLL nb_pll, const string& path){
+	int counter_a{0};
+	Vec data{Vec::Zero(5)};
+	for(auto nb_pl : nb_pll){
+		data(0) = counter_a;
+		int counter_b{0};
+		for(auto p : nb_pl){
+			data(1) = counter_b;
+			data(2) = (*p).x(0);
+			data(3) = (*p).x(1);
+			data(4) = (*p).x(2);
+			write_data(data, path);
+			++counter_b;
+		}
+		++counter_a;
+	}
 }
