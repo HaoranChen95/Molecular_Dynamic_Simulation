@@ -6,8 +6,8 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	 * @brief initialize the neighbor list and initialize f0
 	 */
 
-	//ParticleCPtrLL nb_ll{neighbors_list(parm, p_l)};
-	ParticleCPtrLL nb_ll{all_particle_PtrLL(parm, p_l)};
+	ParticleCPtrLL nb_ll{neighbors_list(parm, p_l)};
+	// ParticleCPtrLL nb_ll{all_particle_PtrLL(parm, p_l)};
 	cout << "neighbor list is built " << parm.neighbor() << endl;
 	
 	
@@ -67,7 +67,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 		}
 		
 		unsigned equ_time{static_cast<unsigned> (5.0/parm.time_step())};
-		if (i < 0){
+		if (i < equ_time){
 			double alpha{pow(1.0/2.0*parm.m()*3*parm.N()/kin_energy(parm, p_l),1.0/2.0)};
 			for(ParticlePtr p : p_l){
 				p -> v = alpha*(*p).v;
@@ -77,7 +77,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 		unsigned check_point {static_cast<unsigned> (0.01/parm.time_step())};
 		if(i%check_point == 0){
 
-			// nb_ll = neighbors_list(parm, p_l); /** @brief refresh the neighbor list */
+			nb_ll = neighbors_list(parm, p_l); /** @brief refresh the neighbor list */
 
 			Mat result {Mat::Zero(1,5)};
 			result(0,0) = i*parm.time_step();
@@ -85,7 +85,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 			double pot_e{pot_energy(parm, nb_ll)};
 			result(0,1) = kin_e;
 			result(0,2) = pot_e;
-			result(0,3) = kin_e + 0.5 * pot_e;  //TODO the sum potential energy problem
+			result(0,3) = kin_e + pot_e;  //TODO the sum potential energy problem
 			Vec sum_v{Vec::Zero(3)};
 			for(ParticlePtr p : p_l){
 				sum_v += (*p).v;
