@@ -1,2 +1,2 @@
-lattice_edge_particles:4
+lattice_edge_particles:10
 neighbor:1.8

@@ -22,7 +22,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	// 	++nb_ll_it;
 	// }
 
-	init_force_forward(parm, nb_ll);
+	force_forward(parm, nb_ll);
 
 	// int counter {0};
 	// for (ParticleCPtr p: p_l){
@@ -36,24 +36,30 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	 */
 
 	unsigned long steps {static_cast<unsigned long>(parm.time_length()/parm.time_step())};
-	for(unsigned long i{0}; i < 100; ++i){
+	for(unsigned long i{0}; i < steps; ++i){
 		for(ParticlePtr p : p_l){
 			p -> x = velocity_verlet_x(parm, *p);
 		}
 
-		p_l_it = p_l.begin();
-		nb_ll_it = nb_ll.begin();
-		while(p_l_it != p_l.end()){
-			(*p_l_it) -> f1 = sum_force(parm, **p_l_it, *nb_ll_it);
-			(*p_l_it) -> v = velocity_verlet_v(parm, **p_l_it);
-			(*p_l_it) -> f0 = (**p_l_it).f1;
-			
-			++p_l_it;
-			++nb_ll_it;
+		force_forward(parm, nb_ll);
+
+		for(ParticlePtr p : p_l){
+			p -> v = velocity_verlet_v(parm, *p);
 		}
+
+		// p_l_it = p_l.begin();
+		// nb_ll_it = nb_ll.begin();
+		// while(p_l_it != p_l.end()){
+		// 	// (*p_l_it) -> f1 = sum_force(parm, **p_l_it, *nb_ll_it);
+		// 	(*p_l_it) -> v = velocity_verlet_v(parm, **p_l_it);
+		// 	// (*p_l_it) -> f0 = (**p_l_it).f1;
+			
+		// 	++p_l_it;
+		// 	++nb_ll_it;
+		// }
 		
 		unsigned equ_time{static_cast<unsigned> (5.0/parm.time_step())};
-		if (i < 0){
+		if (i < equ_time){
 			double alpha{pow(1.0/2.0*parm.m()*3*parm.N()/kin_energy(parm, p_l),1.0/2.0)};
 			for(ParticlePtr p : p_l){
 				p -> v = alpha*(*p).v;
@@ -62,12 +68,12 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 
 		unsigned check_point {static_cast<unsigned> (0.01/parm.time_step())};
 		if(i%check_point == 0){
-			// nb_ll = neighbors_list_forward(parm, p_l); /** @brief refresh the neighbor list */
+			nb_ll = neighbors_list_forward(parm, p_l); /** @brief refresh the neighbor list */
 
 			Mat result {Mat::Zero(1,5)};
 			result(0,0) = i*parm.time_step();
 			double kin_e{kin_energy(parm, p_l)};
-			double pot_e{pot_energy_all(parm, p_l)};
+			double pot_e{pot_energy_forward(parm, nb_ll)};
 			result(0,1) = kin_e;
 			result(0,2) = pot_e;
 			result(0,3) = kin_e + pot_e;  
@@ -76,7 +82,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 				sum_v += (*p).v;
 			}
 			result(0,4) = sum_v.norm();
-
+			// write_ParticleList(p_l, "p_l_at_" + to_string(i*parm.time_step()));
 			write_data(result);
 		}
 	}
@@ -145,9 +151,9 @@ double pot_energy_forward(const MDParameter parm, const ParticlePtrLL p_neighbor
 	return E;
 }
 
-void init_force_forward(const MDParameter parm, const ParticlePtrLL nb_ll){ //TODO add the f1 term
+void force_forward(const MDParameter parm, const ParticlePtrLL nb_ll){ //TODO add the f1 term
 	for (ParticlePtrList nb_l : nb_ll){
-		
+		nb_l.front() -> f1 = (*nb_l.front()).f0;
 		nb_l.front() -> f0 = Vec::Zero(3);
 	}
 	for (ParticlePtrList nb_l : nb_ll){
@@ -156,7 +162,7 @@ void init_force_forward(const MDParameter parm, const ParticlePtrLL nb_ll){ //TO
 		while(nb_l_it != nb_l.end()){
 			Vec force {Cut_LJ_Force(parm, (**nb_l.cbegin()).x, (**nb_l_it).x)};
 			nb_l.front() -> f0 += force;
-			(**nb_l_it).f0 += force;
+			(**nb_l_it).f0 -= force;
 			++nb_l_it;
 		}
 	}

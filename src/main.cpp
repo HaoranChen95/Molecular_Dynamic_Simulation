@@ -31,14 +31,7 @@ int main(const int argc, const char* argv[]){
 	ParticlePtrList p_l{init_lattice(parm)};
 	if (!p_l.empty()){
 		/** @brief print the p_l*/
-		// int counter{1};
-
-		// for (ParticleCPtr p : p_l){
-		// 	cout << counter << ":\n" << (*p).x << endl;
-		// 	++counter;
-		// }
-		
-		
+		//write_ParticleList(p_l);
 		MD_Simulation(parm, p_l);
 	}
 
