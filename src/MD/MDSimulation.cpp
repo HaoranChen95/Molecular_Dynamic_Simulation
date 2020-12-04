@@ -6,14 +6,21 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	 * @brief initialize the neighbor list and initialize f0
 	 */
 
-	ParticlePtrLL nb_ll{neighbors_list_forward(parm, p_l)};
-	// ParticlePtrLL nb_ll{all_particle_PtrLL(parm, p_l)};
-	cout << "neighbor list is built " << parm.neighbor() << endl;
+	ParticlePtrLL nb_ll;
+
+	if(parm.open_nnl()){
+		cout << "neighbors list is opened" << endl;
+		nb_ll = neighbors_list_forward(parm, p_l);
+	}
+	else{
+		cout << "neighbors list is closed" << endl;
+		nb_ll = all_particle_PtrLL(parm, p_l);
+	}
 	
-	// write_neighbor_list(nb_ll);
+	write_neighbor_list(parm, nb_ll);
 	
-	ParticlePtrList::iterator p_l_it{p_l.begin()};
-	ParticlePtrLL::const_iterator nb_ll_it{nb_ll.begin()};
+	// ParticlePtrList::iterator p_l_it{p_l.begin()};
+	// ParticlePtrLL::const_iterator nb_ll_it{nb_ll.begin()};
 
 	// while(p_l_it != p_l.end()){
 	// 	(*p_l_it) -> f0 = sum_force(parm, **p_l_it, *nb_ll_it);
@@ -52,7 +59,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 		// 	++nb_ll_it;
 		// }
 		
-		unsigned equ_time{static_cast<unsigned> (5.0/parm.time_step())};
+		unsigned equ_time{static_cast<unsigned> (parm.scattering_time()/parm.time_step())};
 		if (i < equ_time){
 			double alpha{pow(1.0/2.0*parm.m()*3*parm.N()/kin_energy(parm, p_l),1.0/2.0)};
 			for(ParticlePtr p : p_l){
@@ -62,20 +69,27 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 
 		unsigned check_point {static_cast<unsigned> (0.01/parm.time_step())};
 		if(i%check_point == 0){
-			nb_ll = neighbors_list_forward(parm, p_l); /** @brief refresh the neighbor list */
-
-			Mat result {Mat::Zero(1,5)};
-			result(0,0) = i*parm.time_step();
+			double pot_e;
+			if(parm.open_nnl()){
+				nb_ll = neighbors_list_forward(parm, p_l); /** @brief refresh the neighbor list */
+				pot_e = pot_energy_forward(parm, nb_ll);
+			}
+			else{
+				pot_e = pot_energy_all(parm, p_l);
+			}
 			double kin_e{kin_energy(parm, p_l)};
-			double pot_e{pot_energy_forward(parm, nb_ll)};
-			result(0,1) = kin_e;
-			result(0,2) = pot_e;
-			result(0,3) = kin_e + pot_e;  
+
+			Vec result {Vec::Zero(6)};
+			result(0) = i*parm.time_step();
+			result(1) = kin_e;
+			result(2) = pot_e;
+			result(3) = kin_e + pot_e; 
+			result(4) = mean_sqrt_trajectory(parm, p_l);
 			Vec sum_v{Vec::Zero(3)};
 			for(ParticlePtr p : p_l){
 				sum_v += (*p).v;
 			}
-			result(0,4) = sum_v.norm();
+			result(5) = sum_v.norm();
 			// write_ParticleList(p_l, "p_l_at_" + to_string(i*parm.time_step()));
 			write_data(result);
 		}
@@ -145,7 +159,7 @@ double pot_energy_forward(const MDParameter parm, const ParticlePtrLL p_neighbor
 	return E;
 }
 
-void force_forward(const MDParameter parm, const ParticlePtrLL nb_ll){ //TODO add the f1 term
+void force_forward(const MDParameter parm, const ParticlePtrLL nb_ll){
 	for (ParticlePtrList nb_l : nb_ll){
 		nb_l.front() -> f1 = (*nb_l.front()).f0;
 		nb_l.front() -> f0 = Vec::Zero(3);
@@ -160,4 +174,31 @@ void force_forward(const MDParameter parm, const ParticlePtrLL nb_ll){ //TODO ad
 			++nb_l_it;
 		}
 	}
+}
+
+double mean_sqrt_trajectory(const MDParameter parm, const ParticlePtrList p_l){
+	double result{0.0};
+
+	forward_list<Vec> init_x;
+	Vec temp{Vec::Zero(3)};
+	for (unsigned long i{0}; i < parm.lattice_edge_particles(); ++i){ 
+		for (unsigned long j{0}; j < parm.lattice_edge_particles(); ++j){
+			for (unsigned long k{0}; k < parm.lattice_edge_particles(); ++k){
+
+				temp[0]	= (i+0.5)*parm.lattice_constant();
+				temp[1] = (j+0.5)*parm.lattice_constant();
+				temp[2] = (k+0.5)*parm.lattice_constant();
+
+				init_x.push_front(temp);
+			}
+		}
+	}
+
+	forward_list<Vec>::const_iterator init_x_it{init_x.cbegin()};
+
+	for (ParticleCPtr p : p_l){
+		result += ((*p).x - (*init_x_it)).squaredNorm();
+		++init_x_it;
+	}
+	return result / parm.N();
 }

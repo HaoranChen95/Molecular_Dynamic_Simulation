@@ -3,7 +3,7 @@ using namespace std;
 
 
 Vec velocity_verlet_x(const MDParameter parm, const Particle part){
-	return periodic_coordinate(parm, part.x + part.v*parm.time_step() + part.f0/2.0/parm.m()*pow(parm.time_step(),2));
+	return parm, part.x + part.v*parm.time_step() + part.f0/2.0/parm.m()*pow(parm.time_step(),2);
 }
 
 Vec velocity_verlet_v(const MDParameter parm, const Particle part){
@@ -71,20 +71,25 @@ ParticlePtrLL neighbors_list_forward(const MDParameter parm, const ParticlePtrLi
 
 ParticlePtrLL all_particle_PtrLL(const MDParameter parm, const ParticlePtrList p_l){
 	ParticlePtrLL nb_pll;
-	for (ParticlePtr p : p_l){
+	
+	ParticlePtrList::const_iterator p_l_it {p_l.cbegin()};
+	ParticlePtrList::const_iterator other_p_l_it{};
+	while (p_l_it != p_l.cend()){
+		other_p_l_it = p_l_it;
+		++other_p_l_it;
 		ParticlePtrList nb_pl{};
-		for (ParticlePtr other_p : p_l){
-			if(p != other_p){
-				nb_pl.push_front(other_p);
-			}
+		while (other_p_l_it != p_l.cend()){
+			nb_pl.push_front(*other_p_l_it);
+			++other_p_l_it;
 		}
-		nb_pl.push_front(p);
+		nb_pl.push_front(*p_l_it);
 		nb_pll.push_back(nb_pl);
+		++p_l_it;
 	}
 	return nb_pll;
 }
 
-void write_neighbor_list(const ParticlePtrLL nb_pll, const string& path){
+void write_neighbor_list(const MDParameter parm, const ParticlePtrLL nb_pll, const string& path){
 	int counter_a{0};
 	Vec data{Vec::Zero(5)};
 	for(auto nb_pl : nb_pll){
@@ -92,9 +97,10 @@ void write_neighbor_list(const ParticlePtrLL nb_pll, const string& path){
 		int counter_b{0};
 		for(auto p : nb_pl){
 			data(1) = counter_b;
-			data(2) = (*p).x(0);
-			data(3) = (*p).x(1);
-			data(4) = (*p).x(2);
+			Vec x {periodic_coordinate(parm, (*p).x)};
+			data(2) = x(0);
+			data(3) = x(1);
+			data(4) = x(2);
 			write_data(data, path);
 			++counter_b;
 		}

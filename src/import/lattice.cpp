@@ -50,7 +50,6 @@ ParticlePtrList init_lattice(const MDParameter parm){
 		p -> v -= temp; 
 	}
 
-	cout << "initial latice with position and velocities is built." << endl;
 	return p_l;
 }
 

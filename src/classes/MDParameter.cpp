@@ -6,18 +6,18 @@
 using namespace std;
 
 MDParameter::MDParameter(){
-	m_	=	1.0;
-	epsilon_ = 1.0;
-	sigma_ = 1.0;
+	// m_	=	1.0;
+	// epsilon_ = 1.0;
+	// sigma_ = 1.0;
 
-	lattice_edge_particles_ = 4;
-	N_ = lattice_edge_particles_ * lattice_edge_particles_ * lattice_edge_particles_;
+	// lattice_edge_particles_ = 4;
+	// N_ = lattice_edge_particles_ * lattice_edge_particles_ * lattice_edge_particles_;
 
-	density_ = 0.5;
-	lattice_constant_ = pow(density_, -1.0/3.0);
-	boundary_width_ = lattice_edge_particles_ * lattice_constant_;
+	// density_ = 0.5;
+	// lattice_constant_ = pow(density_, -1.0/3.0);
+	// boundary_width_ = lattice_edge_particles_ * lattice_constant_;
 
-	kT_ = 1.0;
+	// kT_ = 1.0;
 }
 
 void MDParameter::print(){
@@ -32,21 +32,26 @@ void MDParameter::print(){
 	cout << "lattice constant:\t\t" << lattice_constant_ << endl;
 	cout << "boundary width:\t\t\t" << boundary_width_ << endl;
 	cout << "kT:\t\t\t\t" << kT_ << endl;
-	cout << "search neighbor radius:\t\t" << neighbor_ << endl;
+	cout << "nearest neighbor radius:\t" << neighbor_ << endl;
 	cout << "-------------------------------------------" <<endl;
 	cout << "time length:\t\t\t" << time_length_ << endl;
 	cout << "time step:\t\t\t" << time_step_ << endl;
+	cout << "scattering time:\t\t" << scattering_time_ << endl;
+	cout << "open nearest neighbor list:\t" << open_nnl_ << endl;
 	cout << "===========================================" <<endl;
 }
 
 void MDParameter::N(const unsigned long input)			{N_ = input;};
-void MDParameter::lattice_edge_particles(const unsigned long input){lattice_edge_particles_ = input;}
+void MDParameter::lattice_edge_particles(const unsigned long input){lattice_edge_particles_ = input;
+																	N_ = input * input * input;}
 void MDParameter::epsilon(const double input)			{epsilon_ = input;};
 void MDParameter::sigma(const double input)				{sigma_ = input;};
 void MDParameter::m(const double input)					{m_ = input;};
 void MDParameter::boundary_width(const double input)	{boundary_width_ = input;};
 void MDParameter::time_step(const double input)			{time_step_ = input;};
 void MDParameter::time_length(const double input)		{time_length_ = input;};
+void MDParameter::scattering_time(const double input)	{scattering_time_ = input;}
+void MDParameter::open_nnl(const bool input)			{open_nnl_ = input;}
 
 unsigned long MDParameter::N() const			{return N_;}
 unsigned long MDParameter::lattice_edge_particles() const {return lattice_edge_particles_;}
@@ -59,6 +64,8 @@ double MDParameter::time_length() const			{return time_length_;}
 double MDParameter::lattice_constant() const	{return lattice_constant_;}
 double MDParameter::kT() const					{return kT_;}
 double MDParameter::neighbor() const			{return neighbor_;}
+double MDParameter::scattering_time() const		{return scattering_time_;}
+bool MDParameter::open_nnl() const				{return open_nnl_;}
 
 /** @brief Parse key-value parameter from input/input.txt
  *
@@ -89,9 +96,9 @@ void MDParameter::read_input(const string& path, const string& suffix){
 						density_ = stold(line_cutted[1]);
 						lattice_constant_ = pow(density_, -1.0/3.0);
 						boundary_width_ = lattice_edge_particles_ * lattice_constant_;
-						cout << "set density: " << density_ <<endl;
-						cout << "set lattice constant: " << lattice_constant_ <<endl;
-						cout << "set boundary width: " << boundary_width_ << endl;
+						cout << "set density:\t\t\t" << density_ <<endl;
+						cout << "set lattice constant:\t\t" << lattice_constant_ <<endl;
+						cout << "set boundary width:\t\t" << boundary_width_ << endl;
 						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("lattice_edge_particles")){
@@ -105,7 +112,7 @@ void MDParameter::read_input(const string& path, const string& suffix){
 					}
 					if (!key.compare("epsilon")){
 						epsilon_ = stold(line_cutted[1]);
-						cout << "epsilon:\t\t" << epsilon_ <<endl;
+						cout << "epsilon:\t\t\t" << epsilon_ <<endl;
 						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("sigma")){
@@ -115,7 +122,7 @@ void MDParameter::read_input(const string& path, const string& suffix){
 					}
 					if (!key.compare("m")){
 						m_ = stod(line_cutted[1]);
-						cout << "set m:\t\t\t" << m_ <<endl;
+						cout << "set m:\t\t\t\t" << m_ <<endl;
 						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("boundary_width")){
@@ -131,6 +138,16 @@ void MDParameter::read_input(const string& path, const string& suffix){
 					if (!key.compare("neighbor")){
 						neighbor_= stod(line_cutted[1]);
 						cout << "set search neighbor radius:\t" << neighbor_ <<endl;
+						cout << "===========================================" <<endl;
+					}
+					if (!key.compare("scattering_time")){
+						scattering_time_ = stod(line_cutted[1]);
+						cout << "set scattering time:\t\t" << scattering_time_ <<endl;
+						cout << "===========================================" <<endl;
+					}
+					if (!key.compare("open_nnl")){
+						open_nnl_ = stoi(line_cutted[1]) != 0;
+						cout << "set open nearest neighbor list:\t" << open_nnl_ <<endl;
 						cout << "===========================================" <<endl;
 					}
 				}

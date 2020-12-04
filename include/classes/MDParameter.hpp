@@ -28,6 +28,8 @@ class MDParameter{
 		void time_length(const double input);
 		void kT(const double input);
 		void neighbor(const double input);
+		void scattering_time(const double input);
+		void open_nnl(const bool input);
 
 		void print();
 
@@ -42,6 +44,8 @@ class MDParameter{
 		double time_length() const;
 		double kT() const;
 		double neighbor() const;
+		double scattering_time() const;
+		bool open_nnl() const;
 
 	private:
 		unsigned long lattice_edge_particles_; //the particles number at the edge lattice 
@@ -57,7 +61,8 @@ class MDParameter{
 		double time_step_;  ///< time step
 		double time_length_; ///< simulation time length
 		double neighbor_; ///< scan radius of neighbor particules
-
+		double scattering_time_;
+		bool open_nnl_;
 };
 
 #endif

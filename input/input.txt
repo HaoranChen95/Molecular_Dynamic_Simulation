@@ -1,2 +1,6 @@
-lattice_edge_particles:4
-neighbor:1.8
+density:				0.5
+kT:						1.0
+neighbor:				1.5
+m:						1.0
+epsilon:				1.0
+sigma:					1.0
