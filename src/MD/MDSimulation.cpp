@@ -6,8 +6,8 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	 * @brief initialize the neighbor list and initialize f0
 	 */
 
-	// ParticlePtrLL nb_ll{neighbors_list_forward(parm, p_l)};
-	ParticlePtrLL nb_ll{all_particle_PtrLL(parm, p_l)};
+	ParticlePtrLL nb_ll{neighbors_list_forward(parm, p_l)};
+	// ParticlePtrLL nb_ll{all_particle_PtrLL(parm, p_l)};
 	cout << "neighbor list is built " << parm.neighbor() << endl;
 	
 	// write_neighbor_list(nb_ll);
@@ -23,12 +23,6 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l){
 	// }
 
 	force_forward(parm, nb_ll);
-
-	// int counter {0};
-	// for (ParticleCPtr p: p_l){
-	// 	cout << counter << ": " << (*p).f0.norm() << endl;
-	// 	++counter;
-	// }
 
 	/**
 	 * @brief the main part of MD Simulation

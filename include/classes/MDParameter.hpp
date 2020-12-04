@@ -10,7 +10,7 @@
 #include "write_data.hpp"
 
 
-class MDParameter{ //TODO this class have not clear relationship
+class MDParameter{
 
 	public:
 		MDParameter();
@@ -28,6 +28,8 @@ class MDParameter{ //TODO this class have not clear relationship
 		void time_length(const double input);
 		void kT(const double input);
 		void neighbor(const double input);
+
+		void print();
 
 		unsigned long N() const;
 		unsigned long lattice_edge_particles() const;
@@ -50,9 +52,10 @@ class MDParameter{ //TODO this class have not clear relationship
 		double density_;	///< density of system N/V
 		double boundary_width_;  ///< boundary of periodic boundary potential
 		double lattice_constant_;
+		double kT_; ///< initial system temperature
+		
 		double time_step_;  ///< time step
 		double time_length_; ///< simulation time length
-		double kT_; ///< initial system temperature
 		double neighbor_; ///< scan radius of neighbor particules
 
 };

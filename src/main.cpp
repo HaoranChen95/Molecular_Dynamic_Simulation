@@ -6,24 +6,23 @@ using namespace std;
  * @param[in] argc Number of input arguments
  * @param[in] argv Input arguments **/
 
-//TODO change the force potential to cut LJ potential and force
+//TODO build a timer class
 //TODO change the in put data class
-//TODO add energy calculation function
-//TODO add efficient radius
 
 int main(const int argc, const char* argv[]){
 	cout << "entering main" << endl;
 	
 	clock_t begin_time{clock()};
+	
 	try{assign(parm, argc, argv);}
 	catch(const runtime_error& err){
 		cout << err.what() << endl;
 		return 1;	
 	}
 
-	cout <<"time step:\t\t" << parm.time_step() << endl;
-
 	parm.read_input();
+
+	parm.print();
 
 	// test_Cut_LJ_Potential(parm);
 

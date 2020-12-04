@@ -9,12 +9,34 @@ MDParameter::MDParameter(){
 	m_	=	1.0;
 	epsilon_ = 1.0;
 	sigma_ = 1.0;
-	cout << "sigma:\t\t\t" << sigma_ <<endl;
+
+	lattice_edge_particles_ = 4;
+	N_ = lattice_edge_particles_ * lattice_edge_particles_ * lattice_edge_particles_;
 
 	density_ = 0.5;
 	lattice_constant_ = pow(density_, -1.0/3.0);
-	cout << "lattice_constant:\t" << lattice_constant_ << endl;
+	boundary_width_ = lattice_edge_particles_ * lattice_constant_;
+
 	kT_ = 1.0;
+}
+
+void MDParameter::print(){
+	cout << "===========================================" <<endl;
+	cout << "m:\t\t\t\t" << m_ << endl;
+	cout << "epsilon:\t\t\t" << epsilon_ << endl;
+	cout << "sigma:\t\t\t\t" << sigma_ << endl;
+	cout << "-------------------------------------------" <<endl;
+	cout << "lattice_edge_particles:\t\t" << lattice_edge_particles_<< endl;
+	cout << "N:\t\t\t\t" << N_ << endl;
+	cout << "density:\t\t\t" << density_ << endl;
+	cout << "lattice constant:\t\t" << lattice_constant_ << endl;
+	cout << "boundary width:\t\t\t" << boundary_width_ << endl;
+	cout << "kT:\t\t\t\t" << kT_ << endl;
+	cout << "search neighbor radius:\t\t" << neighbor_ << endl;
+	cout << "-------------------------------------------" <<endl;
+	cout << "time length:\t\t\t" << time_length_ << endl;
+	cout << "time step:\t\t\t" << time_step_ << endl;
+	cout << "===========================================" <<endl;
 }
 
 void MDParameter::N(const unsigned long input)			{N_ = input;};
@@ -60,41 +82,56 @@ void MDParameter::read_input(const string& path, const string& suffix){
 				if (2 == line_cutted.size()){  // to avoid empty value field
 					if (!key.compare("N")){
 						N_ = stoul(line_cutted[1]);
-						cout << "N:\t\t\t" << N_ <<endl;
+						cout << "set N:\t\t\t" << N_ <<endl;
+						cout << "===========================================" <<endl;
+					}
+					if (!key.compare("density")){
+						density_ = stold(line_cutted[1]);
+						lattice_constant_ = pow(density_, -1.0/3.0);
+						boundary_width_ = lattice_edge_particles_ * lattice_constant_;
+						cout << "set density: " << density_ <<endl;
+						cout << "set lattice constant: " << lattice_constant_ <<endl;
+						cout << "set boundary width: " << boundary_width_ << endl;
+						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("lattice_edge_particles")){
 						lattice_edge_particles_ = stoul(line_cutted[1]);
 						N_ = lattice_edge_particles_ * lattice_edge_particles_ * lattice_edge_particles_;
 						boundary_width_ = lattice_edge_particles_ * lattice_constant_;
-
-						cout<< "lattice_edge_particles\t" << lattice_edge_particles_<< endl
-							<< "N:\t\t\t" << N_ <<endl
-							<< "boundary_width:\t\t" << boundary_width_ << endl;
+						cout << "set lattice_edge_particles\t" << lattice_edge_particles_<< endl;
+						cout << "set N:\t\t\t\t" << N_ <<endl;
+						cout << "set boundary width:\t\t" << boundary_width_ << endl;
+						cout << "===========================================" <<endl;
 					}
-					//TODO add code to read density and make sure the relationship between the parameter
 					if (!key.compare("epsilon")){
 						epsilon_ = stold(line_cutted[1]);
 						cout << "epsilon:\t\t" << epsilon_ <<endl;
+						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("sigma")){
 						sigma_ = stoi(line_cutted[1]);
-						cout << "sigma:\t\t\t" << sigma_ <<endl;
+						cout << "set sigma:\t\t\t" << sigma_ <<endl;
+						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("m")){
 						m_ = stod(line_cutted[1]);
-						cout << "m:\t\t\t" << m_ <<endl;
+						cout << "set m:\t\t\t" << m_ <<endl;
+						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("boundary_width")){
 						boundary_width_ = stod(line_cutted[1]);
-						cout << "periodic boundary width:\t" << boundary_width_ <<endl;
+						cout << "set periodic boundary width:\t" << boundary_width_ <<endl;
+						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("kT")){
 						kT_= stod(line_cutted[1]);
-						cout << "kT:\t\t\t\t" << kT_ <<endl;
+						cout << "set kT:\t\t\t\t" << kT_ <<endl;
+						cout << "===========================================" <<endl;
 					}
 					if (!key.compare("neighbor")){
 						neighbor_= stod(line_cutted[1]);
-						cout << "search neighbor radius:\t" << neighbor_ <<endl;
+						cout << "set search neighbor radius:\t" << neighbor_ <<endl;
+						cout << "===========================================" <<endl;
 					}
 				}
 			}
