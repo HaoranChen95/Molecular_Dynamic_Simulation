@@ -3,7 +3,7 @@ using namespace std;
 
 
 Vec velocity_verlet_x(const MDParameter parm, const Particle part){
-	return parm, part.x + part.v*parm.time_step() + part.f0/2.0/parm.m()*pow(parm.time_step(),2);
+	return part.x + part.v*parm.time_step() + part.f0/2.0/parm.m()*pow(parm.time_step(),2.0);
 }
 
 Vec velocity_verlet_v(const MDParameter parm, const Particle part){
