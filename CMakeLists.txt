@@ -1,7 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1...3.5)
-
-
-add_compile_options(-std=c++11 -Wall -Werror)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.5...3.16)
 
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 INCLUDE(BuildExternalProject)

@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)"
 
-lattice_edge_particles=(12)
+lattice_edge_particles=(12 16)
 time_length=(50)
 time_step=(0.002)
 scattering_time=(0 1 2 3 4 5)
@@ -21,7 +21,7 @@ for i in "${lattice_edge_particles[@]}"; do
 					cp build/main ${dir}/${name}
 					cp input/input.txt ${dir}/input.txt
 					cd ${dir}
-					srun --partition=th2 --account=chen --output="MD_Simulation%j.out" ./${name} ${i} ${j} ${k} ${l} ${m}&
+					nohup ./${name} ${i} ${j} ${k} ${l} ${m}&
 					cd ${SCRIPT_DIR}
 				done
 			done
