@@ -42,19 +42,19 @@ void MDParameter::print() {
   cout << "===========================================" << endl;
 }
 
-void MDParameter::N(const unsigned long input) { N_ = input; };
+void MDParameter::N(const unsigned long input) { N_ = input; }
 void MDParameter::lattice_edge_particles(const unsigned long input) {
   lattice_edge_particles_ = input;
   N_ = input * input * input;
 }
-void MDParameter::epsilon(const double input) { epsilon_ = input; };
-void MDParameter::sigma(const double input) { sigma_ = input; };
-void MDParameter::m(const double input) { m_ = input; };
+void MDParameter::epsilon(const double input) { epsilon_ = input; }
+void MDParameter::sigma(const double input) { sigma_ = input; }
+void MDParameter::m(const double input) { m_ = input; }
 void MDParameter::boundary_width(const double input) {
   boundary_width_ = input;
-};
-void MDParameter::time_step(const double input) { time_step_ = input; };
-void MDParameter::time_length(const double input) { time_length_ = input; };
+}
+void MDParameter::time_step(const double input) { time_step_ = input; }
+void MDParameter::time_length(const double input) { time_length_ = input; }
 void MDParameter::scattering_time(const double input) {
   scattering_time_ = input;
 }

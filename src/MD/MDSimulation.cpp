@@ -10,23 +10,12 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l) {
 
   if (parm.open_nnl()) {
     cout << "neighbors list is opened" << endl;
-    nb_ll = neighbors_list_forward(parm, p_l);
   } else {
     cout << "neighbors list is closed" << endl;
-    nb_ll = all_particle_PtrLL(parm, p_l);
+    nb_ll = all_particle_PtrLL(p_l);
   }
 
   write_neighbor_list(parm, nb_ll);
-
-  // ParticlePtrList::iterator p_l_it{p_l.begin()};
-  // ParticlePtrLL::const_iterator nb_ll_it{nb_ll.begin()};
-
-  // while(p_l_it != p_l.end()){
-  // 	(*p_l_it) -> f0 = sum_force(parm, **p_l_it, *nb_ll_it);
-
-  // 	++p_l_it;
-  // 	++nb_ll_it;
-  // }
 
   force_forward(parm, nb_ll);
 
@@ -87,19 +76,6 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l) {
     }
   }
 
-  // for (const Particle p : p_l){cout << p_l.front().f1 <<endl;} //Print f0
-
-  // int counter = 0;
-  // for(std::forward_list<ParticlePtrList::const_iterator> p_l_il :
-  // p_neighbor){
-
-  // cout << counter <<endl;
-
-  // for(ParticlePtrList::iterator p{p_l.begin()}; p != p_l.end(); ++p){
-  // 	for(std::forward_list<ParticlePtrList::const_iterator> p_l_il :
-  // p_neighbor){ 		cout << (*p_l_il.front()).x << endl;
-  // 	}
-  // }
   cout << "finished MD_Simulation" << endl;
 }
 

@@ -1,10 +1,11 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.5...3.16)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1...3.5)
 
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 INCLUDE(BuildExternalProject)
 
 PROJECT(MD LANGUAGES C CXX)
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+add_compile_options(-std=c++11 -Wall -Werror -Wextra -Wpedantic)
 
 build_external_cmake_project(Eigen_ext "${CMAKE_SOURCE_DIR}/lib/eigen-3.3.7.tar.gz")
 FIND_PACKAGE(Eigen3 3.3 REQUIRED NO_MODULE)

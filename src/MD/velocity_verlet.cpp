@@ -2,8 +2,8 @@
 using namespace std;
 
 Vec velocity_verlet_x(const MDParameter parm, const Particle part) {
-  return parm, part.x + part.v * parm.time_step() +
-                   part.f0 / 2.0 / parm.m() * pow(parm.time_step(), 2);
+  return part.x + part.v * parm.time_step() +
+         part.f0 / 2.0 / parm.m() * pow(parm.time_step(), 2.0);
 }
 
 Vec velocity_verlet_v(const MDParameter parm, const Particle part) {
@@ -74,8 +74,7 @@ ParticlePtrLL neighbors_list_forward(const MDParameter parm,
   return nb_pll;
 }
 
-ParticlePtrLL all_particle_PtrLL(const MDParameter parm,
-                                 const ParticlePtrList p_l) {
+ParticlePtrLL all_particle_PtrLL(const ParticlePtrList p_l) {
   ParticlePtrLL nb_pll;
 
   ParticlePtrList::const_iterator p_l_it{p_l.cbegin()};
