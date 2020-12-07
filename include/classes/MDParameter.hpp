@@ -6,6 +6,7 @@
 #include <string>
 
 #include "additional.hpp"
+#include "read_data.hpp"
 #include "str_split.hpp"
 #include "write_data.hpp"
 

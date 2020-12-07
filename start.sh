@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)"
 
-lattice_edge_particles=(12 16)
+lattice_edge_particles=(4)
 time_length=(50)
 time_step=(0.002)
 scattering_time=(0 1 2 3 4 5)

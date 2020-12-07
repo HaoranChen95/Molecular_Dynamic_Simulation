@@ -54,7 +54,8 @@ ParticlePtrList init_lattice(const MDParameter parm) {
   return p_l;
 }
 
-void write_ParticleList(const ParticlePtrList p_l, const string& path) {
+void write_ParticleList(const ParticlePtrList p_l, const string& path,
+                        const string& suffix) {
   Mat data{Mat::Zero(1, 14)};
   for (ParticleCPtr p : p_l) {
     data(0) = (*p).x(0);
@@ -72,6 +73,43 @@ void write_ParticleList(const ParticlePtrList p_l, const string& path) {
     data(12) = (*p).f0(2);
     data(13) = (*p).f0.norm();
 
-    write_data(data, path);
+    write_data(data, path, suffix);
   }
+}
+
+ParticlePtrList read_ParticleList(const string& path, const string& suffix) {
+  Particle new_particle;
+  ParticlePtrList p_l;
+  const string& n = path + suffix;
+
+  ifstream f(n, ios::in);
+  if (f.is_open()) {
+    for (string line; getline(f, line);) {
+      const auto& a = str_split(line, ',');
+      new_particle.x(0) = stod(a[0]);
+      new_particle.x(1) = stod(a[1]);
+      new_particle.x(2) = stod(a[2]);
+      new_particle.v(0) = stod(a[5]);
+      new_particle.v(1) = stod(a[6]);
+      new_particle.v(2) = stod(a[7]);
+      p_l.push_front(make_shared<Particle>(new_particle));
+    }
+    f.close();
+  } else {
+    cout << "read_data get_rows_cols: File could not be opened -> reading "
+            "columns of path " +
+                n
+         << endl;
+  }
+
+  // for(int i{0}; i < data.rows(); ++i){
+  //   new_particle.x(0) = data(i,0);
+  //   new_particle.x(1) = data(i,1);
+  //   new_particle.x(2) = data(i,2);
+  //   new_particle.v(0) = data(i,5);
+  //   new_particle.v(1) = data(i,6);
+  //   new_particle.v(2) = data(i,7);
+  //   p_l.push_front(make_shared<Particle> (new_particle));
+  // }
+  return p_l;
 }

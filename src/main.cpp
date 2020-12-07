@@ -29,9 +29,13 @@ int main(const int argc, const char* argv[]) {
 
   // MD simulations goes here
   ParticlePtrList p_l{init_lattice(parm)};
+  write_ParticleList(p_l);
+  ParticlePtrList other_p_l{read_ParticleList()};
+  write_ParticleList(other_p_l,"other_Particles");
+
   if (!p_l.empty()) {
     /** @brief print the p_l*/
-    // write_ParticleList(p_l);
+    
     MD_Simulation(parm, p_l);
   }
 
