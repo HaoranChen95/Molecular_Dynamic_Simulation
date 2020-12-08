@@ -1,11 +1,11 @@
 #ifndef LATTICE_HPP_
 #define LATTICE_HPP_
 
-#include <forward_list>
 #include <memory>
 #include <random>
+#include <vector>
 
-#include "MDParameter.hpp"
+#include "periodic_boundary.hpp"
 
 struct Particle {
   Vec x{Vec::Zero(3)};
@@ -16,15 +16,15 @@ struct Particle {
 
 typedef std::shared_ptr<Particle> ParticlePtr;
 typedef std::shared_ptr<const Particle> ParticleCPtr;
-typedef std::forward_list<std::shared_ptr<Particle>> ParticlePtrList;
-typedef std::forward_list<std::shared_ptr<const Particle>> ParticleCPtrL;
-typedef std::list<std::forward_list<std::shared_ptr<Particle>>> ParticlePtrLL;
-// typedef std::list<std::forward_list<std::shared_ptr <const Particle>>>
+typedef std::vector<std::shared_ptr<Particle>> ParticlePtrList;
+typedef std::vector<std::shared_ptr<const Particle>> ParticleCPtrL;
+typedef std::list<std::vector<std::shared_ptr<Particle>>> ParticlePtrLL;
+// typedef std::list<std::vector<std::shared_ptr <const Particle>>>
 // ParticleCPtrLL;
 
 ParticlePtrList init_lattice(const MDParameter parm);
 
-void write_ParticleList(const ParticlePtrList p_l,
+void write_ParticleList(const MDParameter parm, const ParticlePtrList p_l,
                         const std::string& path = "all_Particles",
                         const std::string& suffix = ".txt");
 ParticlePtrList read_ParticleList(const std::string& path = "all_Particles",

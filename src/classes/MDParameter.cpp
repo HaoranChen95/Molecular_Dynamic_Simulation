@@ -38,6 +38,7 @@ void MDParameter::print() {
   cout << "time length:\t\t\t" << time_length_ << endl;
   cout << "time step:\t\t\t" << time_step_ << endl;
   cout << "scattering time:\t\t" << scattering_time_ << endl;
+  cout << "using simple alpha:\t\t" << simple_alpha_ << endl;
   cout << "open nearest neighbor list:\t" << open_nnl_ << endl;
   cout << "===========================================" << endl;
 }
@@ -59,6 +60,7 @@ void MDParameter::scattering_time(const double input) {
   scattering_time_ = input;
 }
 void MDParameter::open_nnl(const bool input) { open_nnl_ = input; }
+void MDParameter::simple_alpha(const bool input) { simple_alpha_ = input; }
 
 unsigned long MDParameter::N() const { return N_; }
 unsigned long MDParameter::lattice_edge_particles() const {
@@ -75,6 +77,7 @@ double MDParameter::kT() const { return kT_; }
 double MDParameter::neighbor() const { return neighbor_; }
 double MDParameter::scattering_time() const { return scattering_time_; }
 bool MDParameter::open_nnl() const { return open_nnl_; }
+bool MDParameter::simple_alpha() const { return simple_alpha_; }
 
 /** @brief Parse key-value parameter from input/input.txt
  *

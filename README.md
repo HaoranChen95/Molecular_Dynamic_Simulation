@@ -1,5 +1,7 @@
 # Molecular_Dynamic_Simulation
 
+Molecular dynamic simulations often be used to research the classic physic module. The atoms or even moleculars are simplify as small dots with position, mothion and acceration. The interaction between particles is described by cutted Lennad-Jones-Potential.
+
 ## file structure
 
 ```mermaid

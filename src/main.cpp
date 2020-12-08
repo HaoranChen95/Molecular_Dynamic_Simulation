@@ -28,15 +28,19 @@ int main(const int argc, const char* argv[]) {
   // test_Cut_LJ_Potential(parm);
 
   // MD simulations goes here
-  ParticlePtrList p_l{init_lattice(parm)};
-  write_ParticleList(p_l);
-  ParticlePtrList other_p_l{read_ParticleList()};
-  write_ParticleList(other_p_l,"other_Particles");
 
-  if (!p_l.empty()) {
+  ParticlePtrList p_l{read_ParticleList()};
+
+  if (p_l.empty()) {
     /** @brief print the p_l*/
-    
+    p_l = init_lattice(parm);
+    write_ParticleList(parm, p_l);
+  }
+  if (p_l.size() == parm.N()) {
     MD_Simulation(parm, p_l);
+  } else {
+    cout << "There is " << p_l.size()
+         << "particles in the list/n but we expect " << parm.N() << "p";
   }
 
   /** @brief out put program runing time */

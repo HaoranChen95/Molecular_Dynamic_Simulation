@@ -33,7 +33,7 @@ ParticlePtrList init_lattice(const MDParameter parm) {
         temp[2] = distribution(generator);
         new_particle.v = temp;
 
-        p_l.push_front(make_shared<Particle>(new_particle));
+        p_l.push_back(make_shared<Particle>(new_particle));
       }
     }
   }
@@ -54,14 +54,15 @@ ParticlePtrList init_lattice(const MDParameter parm) {
   return p_l;
 }
 
-void write_ParticleList(const ParticlePtrList p_l, const string& path,
+void write_ParticleList(const MDParameter parm, const ParticlePtrList p_l, const string& path,
                         const string& suffix) {
   Mat data{Mat::Zero(1, 14)};
   for (ParticleCPtr p : p_l) {
-    data(0) = (*p).x(0);
-    data(1) = (*p).x(1);
-    data(2) = (*p).x(2);
-    data(3) = (*p).x.norm();
+    Vec x {periodic_coordinate(parm, (*p).x)};
+    data(0) = x(0);
+    data(1) = x(1);
+    data(2) = x(2);
+    data(3) = x.norm();
 
     data(5) = (*p).v(0);
     data(6) = (*p).v(1);
@@ -92,7 +93,7 @@ ParticlePtrList read_ParticleList(const string& path, const string& suffix) {
       new_particle.v(0) = stod(a[5]);
       new_particle.v(1) = stod(a[6]);
       new_particle.v(2) = stod(a[7]);
-      p_l.push_front(make_shared<Particle>(new_particle));
+      p_l.push_back(make_shared<Particle>(new_particle));
     }
     f.close();
   } else {

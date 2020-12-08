@@ -37,12 +37,21 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l) {
       p->v = velocity_verlet_v(parm, *p);
     }
 
+    double alpha{1};
     unsigned equ_time{
         static_cast<unsigned>(parm.scattering_time() / parm.time_step())};
     if (i < equ_time) {
-      double alpha{
+      double new_alpha{
           pow(1.0 / 2.0 * parm.m() * 3 * parm.N() / kin_energy(parm, p_l),
               1.0 / 2.0)};
+
+      if (parm.simple_alpha()) {
+        alpha = new_alpha;
+      } else {
+        double frac{static_cast<double>(i)};
+        alpha = (alpha * frac + new_alpha) / (frac + 1.0);
+      }
+
       for (ParticlePtr p : p_l) {
         p->v = alpha * (*p).v;
       }
@@ -71,7 +80,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l) {
         sum_v += (*p).v;
       }
       result(5) = sum_v.norm();
-      // write_ParticleList(p_l, "p_l_at_" + to_string(i*parm.time_step()));
+      write_ParticleList(parm, p_l, "p_l_all_time");
       write_data(result);
     }
   }
@@ -147,7 +156,7 @@ void force_forward(const MDParameter parm, const ParticlePtrLL nb_ll) {
 double mean_sqrt_trajectory(const MDParameter parm, const ParticlePtrList p_l) {
   double result{0.0};
 
-  forward_list<Vec> init_x;
+  vector<Vec> init_x;
   Vec temp{Vec::Zero(3)};
   for (unsigned long i{0}; i < parm.lattice_edge_particles(); ++i) {
     for (unsigned long j{0}; j < parm.lattice_edge_particles(); ++j) {
@@ -156,12 +165,12 @@ double mean_sqrt_trajectory(const MDParameter parm, const ParticlePtrList p_l) {
         temp[1] = (j + 0.5) * parm.lattice_constant();
         temp[2] = (k + 0.5) * parm.lattice_constant();
 
-        init_x.push_front(temp);
+        init_x.push_back(temp);
       }
     }
   }
 
-  forward_list<Vec>::const_iterator init_x_it{init_x.cbegin()};
+  vector<Vec>::const_iterator init_x_it{init_x.cbegin()};
 
   for (ParticleCPtr p : p_l) {
     result += ((*p).x - (*init_x_it)).squaredNorm();
