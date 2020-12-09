@@ -5,9 +5,9 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)"
 lattice_edge_particles=(4)
 time_length=(50.00)
 time_step=(0.002)
-scattering_time=(0 1 2 3)
+scattering_time=(1)
 simple_alpha=(0)
-open_nnl=(0 1)
+open_nnl=(1)
 
 parent_directory="output"
 

@@ -18,7 +18,7 @@ typedef std::shared_ptr<Particle> ParticlePtr;
 typedef std::shared_ptr<const Particle> ParticleCPtr;
 typedef std::vector<std::shared_ptr<Particle>> ParticlePtrList;
 typedef std::vector<std::shared_ptr<const Particle>> ParticleCPtrL;
-typedef std::list<std::vector<std::shared_ptr<Particle>>> ParticlePtrLL;
+typedef std::vector<std::vector<std::shared_ptr<Particle>>> ParticlePtrLL;
 // typedef std::list<std::vector<std::shared_ptr <const Particle>>>
 // ParticleCPtrLL;
 

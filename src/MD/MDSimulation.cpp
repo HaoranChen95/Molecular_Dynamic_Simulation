@@ -8,11 +8,12 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l) {
 
   ParticlePtrLL nb_ll;
 
-  if (parm.open_nnl()) {
-    cout << "neighbors list is opened" << endl;
-  } else {
+  if (parm.open_nnl() == 0) {
     cout << "neighbors list is closed" << endl;
     nb_ll = all_particle_PtrLL(p_l);
+  } else {
+    cout << "neighbors list is opened" << endl;
+    nb_ll = neighbors_list_forward(parm, p_l);
   }
 
   write_neighbor_list(parm, nb_ll);
@@ -27,6 +28,58 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l) {
   unsigned long steps{
       static_cast<unsigned long>(parm.time_length() / parm.time_step())};
   for (unsigned long i{0}; i < steps; ++i) {
+
+    /**
+     * @brief each check point refresh the neighbor list and out put the energy
+     *
+     */
+    unsigned check_point{static_cast<unsigned>(0.01 / parm.time_step())};
+    if (i % check_point == 0) {
+      double pot_e{0};
+
+      switch (parm.open_nnl()) {
+        case 0:
+          pot_e = pot_energy_all(parm, p_l);
+          break;
+
+        case 1:
+          nb_ll = neighbors_list_forward(
+              parm, p_l); /** @brief refresh the neighbor list */
+          pot_e = pot_energy_forward(parm, nb_ll);
+          break;
+
+        case 2:
+          if (nnl_refresh(parm, nb_ll)) {
+            nb_ll = neighbors_list_forward(parm, p_l);
+          }
+          pot_e = pot_energy_forward(parm, nb_ll);
+          break;
+      }
+      // if (parm.open_nnl()) {
+      //   nb_ll = neighbors_list_forward(
+      //       parm, p_l); /** @brief refresh the neighbor list */
+      //   pot_e = pot_energy_forward(parm, nb_ll);
+      // } else {
+      //   pot_e = pot_energy_all(parm, p_l);
+      // }
+      double kin_e{kin_energy(parm, p_l)};
+
+      Vec result{Vec::Zero(6)};
+      result(0) = i * parm.time_step();
+      result(1) = kin_e;
+      result(2) = pot_e;
+      result(3) = kin_e + pot_e;
+      result(4) = mean_sqrt_trajectory(parm, p_l);
+      Vec sum_v{Vec::Zero(3)};
+      for (ParticlePtr p : p_l) {
+        sum_v += (*p).v;
+      }
+      result(5) = sum_v.norm();
+      write_ParticleList(parm, p_l, "p_l_all_time");
+      write_data(result);
+    }
+
+
     for (ParticlePtr p : p_l) {
       p->x = velocity_verlet_x(parm, *p);
     }
@@ -55,33 +108,6 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l) {
       for (ParticlePtr p : p_l) {
         p->v = alpha * (*p).v;
       }
-    }
-
-    unsigned check_point{static_cast<unsigned>(0.01 / parm.time_step())};
-    if (i % check_point == 0) {
-      double pot_e;
-      if (parm.open_nnl()) {
-        nb_ll = neighbors_list_forward(
-            parm, p_l); /** @brief refresh the neighbor list */
-        pot_e = pot_energy_forward(parm, nb_ll);
-      } else {
-        pot_e = pot_energy_all(parm, p_l);
-      }
-      double kin_e{kin_energy(parm, p_l)};
-
-      Vec result{Vec::Zero(6)};
-      result(0) = i * parm.time_step();
-      result(1) = kin_e;
-      result(2) = pot_e;
-      result(3) = kin_e + pot_e;
-      result(4) = mean_sqrt_trajectory(parm, p_l);
-      Vec sum_v{Vec::Zero(3)};
-      for (ParticlePtr p : p_l) {
-        sum_v += (*p).v;
-      }
-      result(5) = sum_v.norm();
-      write_ParticleList(parm, p_l, "p_l_all_time");
-      write_data(result);
     }
   }
 

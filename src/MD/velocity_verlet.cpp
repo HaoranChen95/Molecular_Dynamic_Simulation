@@ -113,3 +113,23 @@ void write_neighbor_list(const MDParameter parm, const ParticlePtrLL nb_pll,
     ++counter_a;
   }
 }
+
+/**
+ * @brief r_l < r_nnl + (r_nnl-r_cut-d_error)/2
+ * 
+ */
+bool nnl_refresh(const MDParameter parm, const ParticlePtrLL nb_pll) {
+  for (const auto nb_pl : nb_pll) {
+    auto nb_pl_it{nb_pl.cbegin()};
+    double r_l{1.5 * parm.neighbor() - 0.575 * parm.sigma()};
+    ++nb_pl_it;
+    while (nb_pl_it != nb_pl.cend()) {
+      if (periodic_vector(parm, (*nb_pl.front()).x, (**nb_pl_it).x).norm() >
+          r_l) {
+        return true;
+      }
+      ++nb_pl_it;
+    }
+  }
+  return false;
+}

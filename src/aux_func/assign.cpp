@@ -16,7 +16,7 @@ void assign(MDParameter& para, const unsigned argc, const char* argv[]) {
     para.time_step(stod(argv[3]));
     para.scattering_time(stod(argv[4]));
     para.simple_alpha(stoi(argv[5]) != 0);
-    para.open_nnl(stoi(argv[6]) != 0);
+    para.open_nnl(stoi(argv[6]));
   } else {
     const string s =
         "Call executable with 4 input arguments \n lattice_edge_particles, \t "

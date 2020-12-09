@@ -15,6 +15,7 @@ bool is_neighbor(const MDParameter parm, const Particle p_a,
 ParticlePtrLL neighbors_list(const MDParameter parm, const ParticlePtrList p_l);
 ParticlePtrLL neighbors_list_forward(const MDParameter parm,
                                      const ParticlePtrList p_l);
+bool nnl_refresh(const MDParameter parm, const ParticlePtrLL nb_pll);
 
 ParticlePtrLL all_particle_PtrLL(const ParticlePtrList p_l);
 void write_neighbor_list(const MDParameter parm, const ParticlePtrLL nb_pll,

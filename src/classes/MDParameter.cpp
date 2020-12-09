@@ -59,7 +59,7 @@ void MDParameter::time_length(const double input) { time_length_ = input; }
 void MDParameter::scattering_time(const double input) {
   scattering_time_ = input;
 }
-void MDParameter::open_nnl(const bool input) { open_nnl_ = input; }
+void MDParameter::open_nnl(const int input) { open_nnl_ = input; }
 void MDParameter::simple_alpha(const bool input) { simple_alpha_ = input; }
 
 unsigned long MDParameter::N() const { return N_; }
@@ -76,7 +76,7 @@ double MDParameter::lattice_constant() const { return lattice_constant_; }
 double MDParameter::kT() const { return kT_; }
 double MDParameter::neighbor() const { return neighbor_; }
 double MDParameter::scattering_time() const { return scattering_time_; }
-bool MDParameter::open_nnl() const { return open_nnl_; }
+int MDParameter::open_nnl() const { return open_nnl_; }
 bool MDParameter::simple_alpha() const { return simple_alpha_; }
 
 /** @brief Parse key-value parameter from input/input.txt

@@ -28,7 +28,7 @@ class MDParameter {
   void kT(const double input);
   void neighbor(const double input);
   void scattering_time(const double input);
-  void open_nnl(const bool input);
+  void open_nnl(const int input);
   void simple_alpha(const bool input);
 
   void print();
@@ -45,7 +45,7 @@ class MDParameter {
   double kT() const;
   double neighbor() const;
   double scattering_time() const;
-  bool open_nnl() const;
+  int open_nnl() const;
   bool simple_alpha() const;
 
  private:
@@ -64,7 +64,7 @@ class MDParameter {
   double time_length_;  ///< simulation time length
   double neighbor_;     ///< scan radius of neighbor particules
   double scattering_time_;
-  bool open_nnl_;
+  int open_nnl_;
   bool simple_alpha_;
 };
 
