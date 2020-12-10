@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)"
 
-lattice_edge_particles=(4)
+lattice_edge_particles=(8)
 time_length=(5000)
 time_step=(0.002)
 scattering_time=(2)
@@ -24,7 +24,7 @@ for i in "${lattice_edge_particles[@]}"; do
 						cp input/input.txt ${dir}/input.txt
 						cp input/all_Particles.txt ${dir}/all_Particles.txt
 						cd ${dir}
-						srun --account=chen --partition=th2 -o out%j.txt ./${name} ${i} ${j} ${k} ${l} ${m} ${n}&
+						srun --account=chen --partition=jubio -o out_%j.txt ./${name} ${i} ${j} ${k} ${l} ${m} ${n}&
 						cd ${SCRIPT_DIR}
 					done
 				done
