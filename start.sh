@@ -2,12 +2,12 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)"
 
-lattice_edge_particles=(4)
-time_length=(50.00)
+lattice_edge_particles=(4 8)
+time_length=(50)
 time_step=(0.002)
-scattering_time=(1)
+scattering_time=(2)
 simple_alpha=(0)
-open_nnl=(1)
+open_nnl=(0 1 2)
 
 parent_directory="output"
 

@@ -75,7 +75,7 @@ void MD_Simulation(const MDParameter parm, ParticlePtrList p_l) {
         sum_v += (*p).v;
       }
       result(5) = sum_v.norm();
-      write_ParticleList(parm, p_l, "p_l_all_time");
+      // write_ParticleList(parm, p_l, "p_l_all_time");
       write_data(result);
     }
 
